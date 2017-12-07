@@ -1,5 +1,5 @@
-/* CAWeb Dev Plugin CSS */
-
+/* ODWPI Dev Plugin CSS */
+/* ODWPI Panel Page */
 h2{
 	margin-bottom: 5px;	 
 }
@@ -23,7 +23,7 @@ td{
 	padding-right: 9px;
 }
 
-/* CAWeb Panel Page */
+
 #query_string, #coding_string{
 	width: 100%;
 	height: 300px;	

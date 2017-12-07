@@ -46,7 +46,7 @@ function odwpi_dev_plugin_menu() {
 		return;
 
 	// Add Main Menu
-	add_menu_page( "ODWPI Dev", 'ODWPI Dev', 'manage_network_options', 'odwpi-dev', 'odwpi_dev_main_page', sprintf('%1$s/odwpi_logo.png', ODWPIDEVPLUGINURL) );
+	add_menu_page( "ODWPI Dev", 'ODWPI Dev', 'manage_network_options', 'odwpi-dev', 'odwpi_dev_main_page', '' );
 	add_submenu_page( 'odwpi-dev', 'Development', 'Developer Panel','manage_network_options', 'odwpi-dev', 'odwpi_dev_main_page' );
 	
 	// Add Settings Menu
