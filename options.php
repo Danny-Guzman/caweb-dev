@@ -11,18 +11,18 @@ function get_odwpi_dev_plugin_options(){
 */
 
 function odwpi_dev_display_database_tables(){
-
-		global $wpdb;
-	  $sql = '';
-		$results = $wpdb->get_results( 'show tables');
+	global $wpdb;
+	$sql = '';
+	$results = $wpdb->get_results( 'show tables');
+	$db_table = 'Tables_in_' . DB_NAME ;
 ?>
 
 <h2>Tables</h2>
 <select>
-	
-	<?php
-		foreach($results as $tbl){
-			printf('<option>%1$s</option>', $tbl->$sprintf('Tables_in_%1$s', DB_NAME)  );      
+
+	<?php	
+		foreach($results as $i => $tbl){
+			printf('<option>%1$s</option>', ((array) $tbl)[$db_table]  );
 		}
 	?>
 </select>
