@@ -45,14 +45,20 @@ function odwpi_dev_plugin_menu() {
 	if( !odwpi_dev_allowed() )	
 		return;
 
+	$cap = is_multisite() ? 'manage_network_options' : 'manage_options';
+
 	// Add Main Menu
-	add_menu_page( "ODWPI Dev", 'ODWPI Dev', 'manage_network_options', 'odwpi-dev', 'odwpi_dev_main_page', '' );
-	add_submenu_page( 'odwpi-dev', 'Development', 'Developer Panel','manage_network_options', 'odwpi-dev', 'odwpi_dev_main_page' );
+	add_menu_page( "ODWPI Dev", 'ODWPI Dev', $cap, 'odwpi-dev', 'odwpi_dev_main_page', '' );
+	add_submenu_page( 'odwpi-dev', 'Development', 'Developer Panel',$cap, 'odwpi-dev', 'odwpi_dev_main_page' );
 	
 	// Add Settings Menu
 	add_submenu_page( 'odwpi-dev', 'Settings', 'Settings','manage_network_options', 'odwpi-settings', 'odwpi_dev_settings_page' );
 }
-add_action( 'network_admin_menu', 'odwpi_dev_plugin_menu', 9 );
+if( is_multisite() ){
+	add_action( 'network_admin_menu', 'odwpi_dev_plugin_menu', 9 );
+}else{
+	add_action( 'admin_menu', 'odwpi_dev_plugin_menu', 9 );
+}
 
 /* End of File */
 
