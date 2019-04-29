@@ -47,7 +47,12 @@ function odwpi_dev_main_page(){
 			<textarea id="query_string"  name="query_string"> </textarea>
 		</td>
 		<td>
-			<textarea id="coding_string" name="coding_string"></textarea>
+			<textarea id="coding_string" name="coding_string">
+				//delete_site_option('dev'); 
+				$d = get_site_option('dev');
+				
+				print_r( $d );
+			</textarea>
 	</td>
 		</tr>
 		</table>
