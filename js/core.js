@@ -2,6 +2,8 @@ var $ = jQuery.noConflict();
 
 $(document).ready(function(){		
 
+  $('[data-toggle="tooltip"]').tooltip();
+
   $('form#odwpi_form').submit(function(){ 
     $('#devUsers option').prop('selected', true);
     this.submit(); 
@@ -111,6 +113,44 @@ $('button#odwpi_php_coding').click(function(){
     });	
 
 });
+
+$('button#odwpi_git_api').click(function(){
+
+  var output = $('pre#odwpi_output_screen');
+
+  var inputs = $('div#gitHubTab input');
+
+  output.html('Testing API with your parameters...this may take a moment');		
+  
+  var data = {
+    'action': 'odwpi_github_api_test'
+  };
+
+  inputs.each(function(i, gitInput){
+    data[gitInput.name] = 'checkbox' === gitInput.type ? gitInput.checked : gitInput.value;
+  });
+
+  jQuery.post(ajaxurl, data, function(response) {
+      output.html(response);
+  })
+    .error(function(jqXHR, textStatus, errorThrown) {
+      output.html(errorThrown);
+    });	
+});
+
+  $('#gitHubTab input[name="gitPrivateRepo"]').on('change', function(){
+    var privateControls = $('div.git-private-group');
+    var isChecked = this.checked;
+
+    privateControls.each(function(index, group){
+      if(isChecked){
+        $(group).removeClass('hidden');
+      }else{
+        $(group).addClass('hidden');
+      }
+    })
+    
+  });
 
   $('#testDev').click(function(e) {
     e.preventDefault();

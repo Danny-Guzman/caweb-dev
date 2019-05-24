@@ -1,15 +1,5 @@
 <?php
 
-function get_odwpi_dev_plugin_options(){
-	$options = array(  'dev' );
-
-	return $options;
-}
-
-/*
-	ODWPI Panel Page
-*/
-
 function odwpi_dev_display_database_tables(){
 	global $wpdb;
 	$sql = '';

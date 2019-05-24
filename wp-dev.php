@@ -8,8 +8,8 @@ Version: 1.0.1
 Author URI: ""
 */
 
-define('ODWPIDEVPLUGINURL', plugin_dir_url(__FILE__)   );
-define('ODWPIDEVPLUGINDIR', plugin_dir_path( __FILE__ )  );
+define('ODWPIDEVPLUGINURL', plugins_url('', __FILE__) );
+define('ODWPIDEVPLUGINDIR', dirname( __FILE__ ) );
 
 include(ODWPIDEVPLUGINDIR . '/options.php');	
 include(ODWPIDEVPLUGINDIR . '/functions/odwpi-ajax.php');
@@ -46,16 +46,26 @@ function odwpi_dev_plugin_menu() {
 
 function odwpi_dev_enqueue_scripts_styles($hook){
 	$pages = array( 'toplevel_page_odwpi-dev', 'toplevel_page_odwpi-settings', 'odwpi-dev_page_odwpi-settings');
+	$ver = get_plugin_data( __FILE__, false, false)['Version'];
 
 	if( ! in_array($hook , $pages) )	
 		return;
 
-	wp_enqueue_style( 'odwpi_dev_bootstrap_css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' );
-	wp_enqueue_style( 'odwpi_dev_css', ODWPIDEVPLUGINURL . '/css/core.css' );
+	// Enqueue Bootstrap 4.3.1 CSS
+	wp_enqueue_style( 'odwpi_dev_bootstrap_css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1' );
 	
-	wp_register_script('odwpi_dev_helper_script',ODWPIDEVPLUGINURL. '/js/helper.js', array('jquery'), '1.0' );
+	// Enqueue Core CSS
+	wp_enqueue_style( 'odwpi_dev_css', ODWPIDEVPLUGINURL . '/css/core.css', array(), $ver );
+	
+	// Register Bootstrap 4.3.1 and Popper 1.14.7
+	wp_register_script('odwpi_dev_popper_js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', array('jquery'), '1.14.7', true );
+	wp_register_script('odwpi_dev_bootstrap_js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery'), '4.3.1', true );
 
-	wp_enqueue_script('odwpi_dev_core_script',ODWPIDEVPLUGINURL. '/js/core.js', array('jquery', 'odwpi_dev_helper_script'), '1.0' );
+	// Register Helper Script
+	wp_register_script('odwpi_dev_helper_script',ODWPIDEVPLUGINURL. '/js/helper.js', array('jquery'), $ver );
+
+	// Enqueue Core Script along with Helper, Popper, and Bootstrap
+	wp_enqueue_script('odwpi_dev_core_script',ODWPIDEVPLUGINURL. '/js/core.js', array('jquery', 'odwpi_dev_helper_script', 'odwpi_dev_popper_js', 'odwpi_dev_bootstrap_js'), $ver );
 	
 }
 add_action( 'admin_enqueue_scripts', 'odwpi_dev_enqueue_scripts_styles' );

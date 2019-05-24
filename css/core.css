@@ -22,3 +22,8 @@ a.dashicons.thickbox{
 a.dashicons.thickbox:focus{
 	box-shadow: none;
 }
+
+a[data-toggle="tooltip"] {
+    text-decoration: none;
+    border-bottom: 1px dotted;
+}
