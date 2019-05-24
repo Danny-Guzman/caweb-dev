@@ -7,11 +7,18 @@ body{
 	display: none !important;
 }
 
-pre#odwpi_output_screen {
-    min-height: 325px;
+pre#odwpi_output_screen{
+	white-space: pre-line;
 }
-
+pre#odwpi_output_screen,
 textarea#odwpi_coding_string,
 textarea#odwpi_query_string{
-	height: 300px;
+	min-height: 300px;
+}
+
+a.dashicons.thickbox{
+	text-decoration: none;
+}
+a.dashicons.thickbox:focus{
+	box-shadow: none;
 }

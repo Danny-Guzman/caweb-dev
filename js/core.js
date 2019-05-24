@@ -2,7 +2,12 @@ var $ = jQuery.noConflict();
 
 $(document).ready(function(){		
 
-  
+  $('form#odwpi_form').submit(function(){ 
+    $('#devUsers option').prop('selected', true);
+    this.submit(); 
+  });
+
+
   $('.odwpi-nav-tab').click(function() {
     var tabs = $('.odwpi-nav-tab');
     var selected_tab = $(this).attr('href');

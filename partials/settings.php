@@ -75,5 +75,4 @@ $devUsers = get_site_option('odwpi_dev_users', array());
             <input type="submit" name="odwpi_settings_submit" class="btn btn-primary" value="<?php _e('Save Changes') ?>">
         </div>
     </div>
-
 </form>
