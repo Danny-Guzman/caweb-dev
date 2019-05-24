@@ -15,80 +15,36 @@ function odwpi_dev_display_database_tables(){
 	$sql = '';
 	$results = $wpdb->get_results( 'show tables');
 	$db_table = 'Tables_in_' . DB_NAME ;
-?>
 
-<h2>Tables</h2>
-<select>
+	$output = '';
+	foreach($results as $i => $tbl){
+		$output .= sprintf('<option>%1$s</option>', ((array) $tbl)[$db_table]  );
+	}
 
-	<?php	
-		foreach($results as $i => $tbl){
-			printf('<option>%1$s</option>', ((array) $tbl)[$db_table]  );
-		}
-	?>
-</select>
-
-<?php
-
+	return "<select>$output</select>";
 }
 
 function odwpi_dev_main_page(){
-
-?>
-
-<table id="dev_info_table"><tr><td><?php echo odwpi_dev_display_database_tables(); ?></td></tr></table>
-<form id="odwpi_panel_form" action="admin.php?page=odwpi-dev" method="POST">
-	<table >
-		<tr>
-			<th><label for="querying">Run a query:</label> <input type="button" id="querying" name="querying" class="button button-primary" value="Run Query"/></th>
-			<th><label for="coding">Test Code:</label> <input type="button" id="coding"  name="coding" class="button button-primary" value="Run Code"/></th>
-		</tr>
-	<tr>
-		<td>
-			<textarea id="query_string"  name="query_string"> </textarea>
-		</td>
-		<td>
-			<textarea id="coding_string" name="coding_string">//delete_site_option('dev'); 
-$d = get_site_option('dev');
-				
-print_r( $d );
-			</textarea>
-	</td>
-		</tr>
-		</table>
-</form>
-
-<table id="output">
-	<tr>
-		<th>Output:</th>
-	</tr>
-	<tr>
-	<td >
-		<pre id="output_screen"></pre>
-	</td>
-		</tr>
-</table>
-
-<?php
-
+	require_once(ODWPIDEVPLUGINDIR."/partials/panel.php");
 }
 
 
 function odwpi_dev_settings_page(){
-
-?>
-<form id="odwpi_form" action="admin.php?page=odwpi-settings" method="POST">
-	<?php
-		if(isset($_POST['submit']))
-			odwpi_dev_update_network_options();
-	?>
-
-	
-<?php
-
+	require_once(ODWPIDEVPLUGINDIR."/partials/settings.php");
 }
 
-function odwpi_dev_update_network_options() {
- 
+function odwpi_dev_update_settings() {
+	$devUsers = isset($_POST['devUsers']) ? $_POST['devUsers'] : array();
+	$dev = array();
+
+	foreach($devUsers as $i => $d){
+		$id = substr($d, strrpos($d, '-') + 1 );
+		$user = substr($d, 0, strrpos($d, '-'));
+
+		$dev[$id] = $user;
+
+	}
+	update_site_option('odwpi_dev_users', $dev);
 }
 
 // End of File
