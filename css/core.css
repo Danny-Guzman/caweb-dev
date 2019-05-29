@@ -11,7 +11,7 @@ pre#odwpi_output_screen{
 	white-space: pre-line;
 }
 pre#odwpi_output_screen,
-textarea#odwpi_coding_string,
+textarea#odwpi_php_coding_string,
 textarea#odwpi_query_string{
 	min-height: 300px;
 }

@@ -11,7 +11,9 @@ function odwpi_dev_display_database_tables(){
 		$output .= sprintf('<option>%1$s</option>', ((array) $tbl)[$db_table]  );
 	}
 
-	return "<select>$output</select>";
+	$class = 'class="h-auto"';
+
+	return "<select $class>$output</select>";
 }
 
 function odwpi_dev_main_page(){

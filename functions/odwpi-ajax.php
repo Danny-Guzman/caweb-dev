@@ -28,7 +28,9 @@ function odwpi_github_api_test(){
 			$$key = $val;
 		}
 	
-		$url = "https://api.github.com/repos/$gitUser/$gitRepo/issues";
+		$gitView = ! empty($gitView) ? "/$gitView" : "";
+
+		$url = ! empty( $gitRepo ) ? "https://api.github.com/repos/$gitUser/$gitRepo$gitView" : "https://api.github.com/users/$gitUser/repos";
 	
 		if( "true" === $gitPrivateRepo )
 			$url .= "?access_token=$gitToken";
@@ -41,8 +43,14 @@ function odwpi_github_api_test(){
 
 		$res = wp_remote_get( $url, $args );
 			
-		update_site_option('dev', $_POST);
-		print_r( wp_remote_retrieve_body( $res ) );
+		if( 200 == wp_remote_retrieve_response_code($res) ){
+			$response['git_request_url'] = $url;
+			$response['git_request_headers'] = $res['headers'];
+			$response['git_request_body'] = json_decode( wp_remote_retrieve_body( $res ) );
+
+			wp_send_json( $response );
+
+		}
 
 	}catch (Exception $e) {
 		print 'Caught exception: ' .  $e->getMessage() . "\n";

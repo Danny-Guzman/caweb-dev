@@ -2,7 +2,7 @@
 
 add_thickbox();
 
-$toolTip1 = "Leaving this blank with return information about all the Users/Organization Repositories.";
+$toolTip1 = "Leaving this field blank will return information about all the Users/Organization Repositories.";
 ?>
 <div class="wrap option-titles" >
 	
@@ -29,9 +29,8 @@ $toolTip1 = "Leaving this blank with return information about all the Users/Orga
                 <strong>Test Code:</strong>
                 <button id="odwpi_php_coding" class="btn btn-primary">Run Code</button>
             </label>
-            <textarea id="odwpi_coding_string" name="odwpi_coding_string" class="d-block w-100"></textarea>
+            <textarea id="odwpi_php_coding_string" name="odwpi_php_coding_string" class="d-block w-100"></textarea>
         </div>
-
         <!-- SQL Column -->
         <div id="sqlTab" class="d-inline-block w-50 mt-2 hidden">
             <label>
@@ -52,18 +51,24 @@ $toolTip1 = "Leaving this blank with return information about all the Users/Orga
         <!-- gitHubTab Column -->
         <div id="gitHubTab" class="d-inline-block w-50 hidden mt-4">
             <div class="form-group mb-2">
-                <label><a href="#" class="text-dark" data-toggle="tooltip" title="<?php print $toolTip1 ?>">User/Organization Name</a></label>
+                <label>User/Organization Name</label>
                 <input type="text" class="form-control" name="gitUser"/>
             </div>
             <div class="form-group mb-2">
-                <label>Repository</label>
+                <label><a href="#" class="text-dark" data-toggle="tooltip" title="<?php print $toolTip1 ?>">Repository</a></label>
                 <input type="text" class="form-control" name="gitRepo"/>
-                <label><input type="checkbox" name="gitPrivateRepo"/> Is Private Repository?</label>
             </div>
             <div class="form-group mb-2 git-private-group hidden">
-                <label>Access Token</label>
-                <input type="text" class="form-control" name="gitToken"/>
-            </div>
+                <span>View Repository</span>
+                <label><input type="radio" class="form-control" name="gitView" value="" checked>Info</label>
+                <label><input type="radio" class="form-control" name="gitView" value="issues">Issues</label>
+                <label><input type="radio" class="form-control" name="gitView" value="releases">Releases</label>
+                <div>
+                    <label><input type="checkbox" name="gitPrivateRepo"/> Is Private Repository?</label>
+                    <label class="d-block hidden">Access Token</label>
+                    <input type="text" class="form-control hidden" name="gitToken"/>
+                </div>
+            </div>            
             <button id="odwpi_git_api" class="btn btn-primary">Test API</button>
         </div>
         
@@ -75,9 +80,13 @@ $toolTip1 = "Leaving this blank with return information about all the Users/Orga
 
         <!-- Output Column -->
         <div class="w-50 float-right px-3 mt-2">
-            <label class="mb-4">
+            <label class="py-2">
                 <strong>Output:</strong>
             </label>
+            <a class="dashicons dashicons-admin-generic thickbox align-middle text-primary py-2 float-right" href="#TB_inline?&amp;inlineId=odwpi_git_info"></a>
+            <div id="odwpi_git_info" class="hidden">
+                <strong>A request has not been made.</strong>
+            </div>
             <pre id="odwpi_output_screen" class="border"></pre>
         </div>
     </div>
