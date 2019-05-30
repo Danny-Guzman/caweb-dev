@@ -72,11 +72,13 @@ $toolTip1 = "Leaving this field blank will return information about all the User
             </div>            
             <button id="odwpi_git_api" class="btn btn-primary">Test API</button>
         </div>
-        
         <!-- tfsTab Column -->
-        <div id="tfsTab" class="d-inline-block w-50 hidden mt-2">
-            
-        
+        <div id="tfsTab" class="d-inline-block w-50 hidden mt-4">
+            <div class="form-group mb-2">
+                    <label>Upload On Prem Export</label>
+                    <input type="file" class="form-control" name="tfsExport"/>
+                </div>
+            <button id="odwpi_tfs_migrate" class="btn btn-primary">Migrate</button>
         </div>
 
         <!-- Output Column -->

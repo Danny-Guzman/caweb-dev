@@ -12,6 +12,7 @@ define('ODWPIDEVPLUGINURL', plugins_url('', __FILE__) );
 define('ODWPIDEVPLUGINDIR', dirname( __FILE__ ) );
 
 include(ODWPIDEVPLUGINDIR . '/options.php');	
+include(ODWPIDEVPLUGINDIR . '/functions/additional_functions.php');
 include(ODWPIDEVPLUGINDIR . '/functions/odwpi-ajax.php');
 
 function odwpi_dev_allowed(){

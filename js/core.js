@@ -90,43 +90,48 @@ $(document).ready(function(){
  $('button#odwpi_sql_query').click(function(){
 
   var output = $('pre#odwpi_output_screen');
-
-  var query = $('textarea#odwpi_query_string').val();		
+  var fd = new FormData();
 
   output.html('Querying the WordPress Database...this may take a moment');		
 
-  var data = {
-    'action': 'odwpi_dev_query',
-    'query_string' : query
-  };
+  fd.append("action", "odwpi_dev_query");
 
-  jQuery.post(ajaxurl, data, function(response) {
-      output.html( response );
-  })
-    .error(function(jqXHR, textStatus, errorThrown) {
-      output.html( errorThrown );
-    });
+  retrieveInputData($('textarea#odwpi_query_string'), fd);
+
+  jQuery.ajax({
+    type: 'POST',
+    url: ajaxurl,
+    contentType: false,
+    processData: false,
+    data: fd,
+    success: function(response) {
+      output.html(response);
+    }
+  });
 
 });
 
 $('button#odwpi_php_coding').click(function(){
 
   var output = $('pre#odwpi_output_screen');
-  var code = $('textarea#odwpi_php_coding_string').val();
+  var fd = new FormData();
 
   output.html('Evaluating your code...this may take a moment');		
 
-  var data = {
-    'action': 'odwpi_dev_code',
-    'coding_string' : code
-  };
+  fd.append("action", "odwpi_dev_code");
 
-  jQuery.post(ajaxurl, data, function(response) {
+  retrieveInputData($('textarea#odwpi_php_coding_string'), fd);
+
+  jQuery.ajax({
+    type: 'POST',
+    url: ajaxurl,
+    contentType: false,
+    processData: false,
+    data: fd,
+    success: function(response) {
       output.html(response);
-  })
-    .error(function(jqXHR, textStatus, errorThrown) {
-      output.html(errorThrown);
-    });	
+    }
+  });
 
 });
 
@@ -137,57 +142,33 @@ $('button#odwpi_git_api').click(function(){
     return;
   }
   var output = $('pre#odwpi_output_screen');
-  var inputs = $('div#gitHubTab input');
   var modalInfo = $('div#odwpi_git_info');
-
+  var fd = new FormData();
 
   output.html('Testing API with your parameters...this may take a moment');		
   
-  var data = {
-    'action': 'odwpi_github_api_test'
-  };
+  fd.append("action", "odwpi_github_api_test");
 
-  inputs.each(function(i, gitInput){
-    switch( gitInput.type ){
-      case 'radio':
-        if( gitInput.checked ){
-          data[gitInput.name] = gitInput.value;
+  retrieveInputData($('div#gitHubTab input'), fd);
+  
+  
+  jQuery.ajax({
+    type: 'POST',
+    url: ajaxurl,
+    contentType: false,
+    processData: false,
+    data: fd,
+    success: function(response) {
+        modalInfo.html(response.info);
+        
+        if( response.git_request_body instanceof Object ){
+          output.html(JSON.stringify(response.git_request_body, null, '\t'));
+        }else{
+          output.html( response.git_request_body );
         }
-
-        break;
-
-      case 'checkbox':
-        data[gitInput.name] = gitInput.checked;
-        break;
-      
-      default:
-        data[gitInput.name] = gitInput.value;
-        break;
     }
-    if( 'radio' === gitInput.type ){
-      if( gitInput.checked )
-      data[gitInput.name] = gitInput.value;
-    }else if( 'checkbox' === gitInput.type ){
-      data[gitInput.name] =  gitInput.checked;
-    }else{
-
-    }
-    
   });
 
-  jQuery.post(ajaxurl, data, function(response) {
-
-      modalInfo.html(response.info);
-      
-      if( response.git_request_body instanceof Object ){
-        output.html(JSON.stringify(response.git_request_body, null, '\t'));
-      }else{
-        output.html( response.git_request_body );
-      }
-  })
-    .error(function(jqXHR, textStatus, errorThrown) {
-      output.html(errorThrown);
-    });	
 });
 
   $('#gitHubTab input[name="gitPrivateRepo"]').on('change', function(){
@@ -211,6 +192,30 @@ $('button#odwpi_git_api').click(function(){
     }
   });
 
+  $('#tfsTab #odwpi_tfs_migrate').click(function(){
+
+    var output = $('pre#odwpi_output_screen');
+    var fd = new FormData();
+
+    output.html('Migrating Work Items');
+
+    fd.append("action", "odwpi_tfs_wit_migration");
+
+    retrieveInputData($('div#tfsTab input'), fd);
+
+    jQuery.ajax({
+      type: 'POST',
+      url: ajaxurl,
+      contentType: false,
+      processData: false,
+      data: fd,
+      success: function(response) {
+        console.log(response);
+      }
+    });
+
+  });
+  
   $('#testDev').click(function(e) {
     e.preventDefault();
     var pattern = "(\\d+)(?!.*\\d)" ;
