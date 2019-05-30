@@ -10,18 +10,35 @@ $(document).ready(function(){
   });
 
 
+  $('.odwpi-nav-tab').bind('classChanged', function(data){ 
+    var tab = $(data.target);
+    
+    if( tab.hasClass('nav-tab-active') ){
+      if( 'gitHubTab' == tab.attr('name') ){
+        $('#git-info').removeClass('hidden');
+        $('#outputTab').removeClass('w-50');
+        $('#outputTab').addClass('w-75');
+      }else{
+        $('#git-info').addClass('hidden');
+        $('#outputTab').addClass('w-50');
+        $('#outputTab').removeClass('w-75');
+      }
+    }
+  });
+
   $('.odwpi-nav-tab').click(function() {
     var tabs = $('.odwpi-nav-tab');
-    var selected_tab = $(this).attr('href');
+    var selected_tab = $(this).attr('name');
 
     tabs.each(function( index, value ) {
-      if( selected_tab !== $(value).attr("href") ){
+      if( selected_tab !== $(value).attr("name") ){
         $(value).removeClass('nav-tab-active');
-        $( $(value).attr("href") ).addClass('hidden');
+        $( "#" +  $(value).attr("name") ).addClass('hidden');
       }else{
         $(value).addClass('nav-tab-active');
-        $( selected_tab ).removeClass('hidden');
+        $( "#" + selected_tab ).removeClass('hidden');
       }
+      $(value).trigger('classChanged');
     });
 
     $('#tab_selected').value = selected_tab;
@@ -115,9 +132,14 @@ $('button#odwpi_php_coding').click(function(){
 
 $('button#odwpi_git_api').click(function(){
 
+  if( ! $('input[name="gitUser"]').val().trim() ){
+    alert('User/Organization Name can not be blank.');
+    return;
+  }
   var output = $('pre#odwpi_output_screen');
   var inputs = $('div#gitHubTab input');
   var modalInfo = $('div#odwpi_git_info');
+
 
   output.html('Testing API with your parameters...this may take a moment');		
   
@@ -154,11 +176,14 @@ $('button#odwpi_git_api').click(function(){
   });
 
   jQuery.post(ajaxurl, data, function(response) {
-      var info = '<label class="mb-0"><strong>Requested URL:</strong></label><p>' + response.git_request_url + '</p>';
-      info += '<label class="mb-0"><strong>Requested Headers:</strong></label><pre>' + JSON.stringify(response.git_request_headers, null, '\t') + '</pre>';
 
-      modalInfo.html(info);
-      output.html(JSON.stringify(response.git_request_body, null, '\t'));
+      modalInfo.html(response.info);
+      
+      if( response.git_request_body instanceof Object ){
+        output.html(JSON.stringify(response.git_request_body, null, '\t'));
+      }else{
+        output.html( response.git_request_body );
+      }
   })
     .error(function(jqXHR, textStatus, errorThrown) {
       output.html(errorThrown);

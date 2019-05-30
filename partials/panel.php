@@ -2,6 +2,7 @@
 
 add_thickbox();
 
+$sample_code = "//Sample Code\n\$d = get_site_option('dev');\n\nprint_r( \$d );";
 $toolTip1 = "Leaving this field blank will return information about all the Users/Organization Repositories.";
 ?>
 <div class="wrap option-titles" >
@@ -10,13 +11,13 @@ $toolTip1 = "Leaving this field blank will return information about all the User
 	
 	<h2 class="nav-tab-wrapper wp-clearfix">
 	
-        <a href="#phpTab" class="odwpi-nav-tab nav-tab nav-tab-active">PHP</a>
+        <a href="#" name="phpTab" class="odwpi-nav-tab nav-tab nav-tab-active">PHP</a>
 		
-        <a href="#sqlTab" class="odwpi-nav-tab nav-tab">SQL</a>
+        <a href="#" name="sqlTab" class="odwpi-nav-tab nav-tab">SQL</a>
 
-        <a href="#gitHubTab" class="odwpi-nav-tab nav-tab">GitHub</a>
+        <a href="#" name="gitHubTab" class="odwpi-nav-tab nav-tab">GitHub</a>
         
-        <a href="#tfsTab" class="odwpi-nav-tab nav-tab">TFS</a>
+        <a href="#" name="tfsTab" class="odwpi-nav-tab nav-tab">TFS</a>
 	</h2>
 </div>
 <div class="container-fluid">
@@ -29,7 +30,7 @@ $toolTip1 = "Leaving this field blank will return information about all the User
                 <strong>Test Code:</strong>
                 <button id="odwpi_php_coding" class="btn btn-primary">Run Code</button>
             </label>
-            <textarea id="odwpi_php_coding_string" name="odwpi_php_coding_string" class="d-block w-100"></textarea>
+            <textarea id="odwpi_php_coding_string" name="odwpi_php_coding_string" class="d-block w-100"><?php print $sample_code; ?></textarea>
         </div>
         <!-- SQL Column -->
         <div id="sqlTab" class="d-inline-block w-50 mt-2 hidden">
@@ -41,7 +42,7 @@ $toolTip1 = "Leaving this field blank will return information about all the User
             <div id="odwpi_db_info" class="hidden">
                 <label class="d-block mt-2">
                 <strong>Database Tables:</strong>
-                <?php echo odwpi_dev_display_database_tables(); ?>
+                <?php print odwpi_dev_display_database_tables(); ?>
                 </label>
             </div>
 
@@ -49,7 +50,7 @@ $toolTip1 = "Leaving this field blank will return information about all the User
         </div>
 
         <!-- gitHubTab Column -->
-        <div id="gitHubTab" class="d-inline-block w-50 hidden mt-4">
+        <div id="gitHubTab" class="d-inline-block w-25 hidden mt-4">
             <div class="form-group mb-2">
                 <label>User/Organization Name</label>
                 <input type="text" class="form-control" name="gitUser"/>
@@ -60,9 +61,9 @@ $toolTip1 = "Leaving this field blank will return information about all the User
             </div>
             <div class="form-group mb-2 git-private-group hidden">
                 <span>View Repository</span>
-                <label><input type="radio" class="form-control" name="gitView" value="" checked>Info</label>
-                <label><input type="radio" class="form-control" name="gitView" value="issues">Issues</label>
-                <label><input type="radio" class="form-control" name="gitView" value="releases">Releases</label>
+                <label class="my-auto"><input type="radio" class="form-control" name="gitView" value="" checked>Info</label>
+                <label class="my-auto"><input type="radio" class="form-control" name="gitView" value="issues">Issues</label>
+                <label class="my-auto"><input type="radio" class="form-control" name="gitView" value="releases">Releases</label>
                 <div>
                     <label><input type="checkbox" name="gitPrivateRepo"/> Is Private Repository?</label>
                     <label class="d-block hidden">Access Token</label>
@@ -79,11 +80,11 @@ $toolTip1 = "Leaving this field blank will return information about all the User
         </div>
 
         <!-- Output Column -->
-        <div class="w-50 float-right px-3 mt-2">
+        <div id="outputTab" class="w-50 float-right px-3 mt-2">
             <label class="py-2">
                 <strong>Output:</strong>
             </label>
-            <a class="dashicons dashicons-admin-generic thickbox align-middle text-primary py-2 float-right" href="#TB_inline?&amp;inlineId=odwpi_git_info"></a>
+            <a id="git-info" class="dashicons dashicons-admin-generic thickbox align-middle text-primary mb-2 hidden" href="#TB_inline?&amp;inlineId=odwpi_git_info"></a>
             <div id="odwpi_git_info" class="hidden">
                 <strong>A request has not been made.</strong>
             </div>
