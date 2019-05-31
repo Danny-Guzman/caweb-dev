@@ -192,29 +192,6 @@ $('button#odwpi_git_api').click(function(){
     }
   });
 
-  $('#tfsTab #odwpi_tfs_migrate').click(function(){
-
-    var output = $('pre#odwpi_output_screen');
-    var fd = new FormData();
-
-    output.html('Migrating Work Items');
-
-    fd.append("action", "odwpi_tfs_wit_migration");
-
-    retrieveInputData($('div#tfsTab input'), fd);
-
-    jQuery.ajax({
-      type: 'POST',
-      url: ajaxurl,
-      contentType: false,
-      processData: false,
-      data: fd,
-      success: function(response) {
-        console.log(response);
-      }
-    });
-
-  });
   
   $('#testDev').click(function(e) {
     e.preventDefault();
