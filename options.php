@@ -25,6 +25,10 @@ function odwpi_dev_settings_page(){
 	require_once(ODWPIDEVPLUGINDIR."/partials/settings.php");
 }
 
+function odwpi_dev_tw_page(){
+	require_once(ODWPIDEVPLUGINDIR."/partials/theme-watcher.php");
+}
+
 function odwpi_dev_update_settings() {
 	$devUsers = isset($_POST['devUsers']) ? $_POST['devUsers'] : array();
 	$dev = array();
@@ -39,6 +43,11 @@ function odwpi_dev_update_settings() {
 	update_site_option('odwpi_dev_users', $dev);
 }
 
+function odwpi_dev_update_tw_settings(){
+	$watched_themes = isset($_POST['watched_themes']) ? $_POST['watched_themes'] : array();
+
+	update_site_option('odwpi_dev_watched_themes', $watched_themes);
+}
 // End of File
 
 ?>

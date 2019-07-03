@@ -14,6 +14,7 @@ define('ODWPIDEVPLUGINDIR', dirname( __FILE__ ) );
 include(ODWPIDEVPLUGINDIR . '/options.php');	
 include(ODWPIDEVPLUGINDIR . '/functions/additional_functions.php');
 include(ODWPIDEVPLUGINDIR . '/functions/odwpi-ajax.php');
+include(ODWPIDEVPLUGINDIR . '/functions/odwpi-post.php');
 
 function odwpi_dev_allowed(){
 	$developers = get_site_option('odwpi_dev_users', array() );
@@ -38,6 +39,7 @@ function odwpi_dev_plugin_menu() {
 	// Add Main Menu
 	if ($dev_allowed) {
 		add_submenu_page('odwpi-dev', 'Development', 'Developer Panel', $cap, 'odwpi-dev', 'odwpi_dev_main_page');
+		add_submenu_page('odwpi-dev', 'Theme Watcher', 'Theme Watcher', $cap, 'odwpi-tw', 'odwpi_dev_tw_page');
 	}
 
 	// Add Settings Menu
@@ -46,7 +48,9 @@ function odwpi_dev_plugin_menu() {
 }
 
 function odwpi_dev_enqueue_scripts_styles($hook){
-	$pages = array( 'toplevel_page_odwpi-dev', 'toplevel_page_odwpi-settings', 'odwpi-dev_page_odwpi-settings');
+	$pages = array( 'toplevel_page_odwpi-dev', 'toplevel_page_odwpi-settings',
+		'odwpi-dev_page_odwpi-tw', 'odwpi-dev_page_odwpi-settings');
+
 	$ver = get_plugin_data( __FILE__, false, false)['Version'];
 
 	if( ! in_array($hook , $pages) )	
