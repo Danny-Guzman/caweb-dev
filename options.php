@@ -25,10 +25,6 @@ function odwpi_dev_settings_page(){
 	require_once(ODWPIDEVPLUGINDIR."/partials/settings.php");
 }
 
-function odwpi_dev_tw_page(){
-	require_once(ODWPIDEVPLUGINDIR."/partials/theme-watcher.php");
-}
-
 function odwpi_dev_update_settings() {
 	$devUsers = isset($_POST['devUsers']) ? $_POST['devUsers'] : array();
 	$dev = array();
