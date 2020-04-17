@@ -15,6 +15,7 @@ include(ODWPIDEVPLUGINDIR . '/options.php');
 include(ODWPIDEVPLUGINDIR . '/functions/additional_functions.php');
 include(ODWPIDEVPLUGINDIR . '/functions/odwpi-ajax.php');
 include(ODWPIDEVPLUGINDIR . '/functions/odwpi-post.php');
+include(ODWPIDEVPLUGINDIR . '/functions/admin-bar.php');
 
 function odwpi_dev_allowed() {
 	$developers = get_site_option('odwpi_dev_users', array());

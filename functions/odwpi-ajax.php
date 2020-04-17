@@ -84,4 +84,29 @@ function odwpi_github_api_test() {
 	wp_die(); // this is required to terminate immediately and return a proper response
 }
 
+add_action('wp_ajax_odwpi_download_post_shortcode', 'odwpi_download_post_shortcode');
+function odwpi_download_post_shortcode() {
+	try {
+		$id = isset( $_GET['id'] ) ? $_GET['id'] : 0;
+		
+		if( $id ){
+			$rev = wp_get_post_revisions( $id );
+			$rev = array_shift( $rev );
+			
+			$title = isset( $rev->post_title ) ? str_replace( ' ', '-', strtolower( $rev->post_title ) ) : 'no-title';
+			$content = isset( $rev->post_content ) ? $rev->post_content : 'No Post Content Found.';
+
+			header( 'Content-type: text/plain' );
+			header( 'Content-Disposition: attachment; filename="' . $title . '.txt"' );
+			header( 'Content-Length: ' . strlen( $content ) );
+			
+			print $content;
+		}else{
+			print "Invalid Post/Page ID.";
+		}
+	} catch (Exception $e) {
+		print 'Caught exception: ' . $e->getMessage() . "\n";
+	}
+	wp_die(); // this is required to terminate immediately and return a proper response
+}
 ?>
