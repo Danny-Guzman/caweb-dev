@@ -1,0 +1,16 @@
+.wmd-view-topscroll, .wmd-view {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    border: none 0px RED;
+}
+
+.wmd-view-topscroll { height: 20px; }
+.scroll-div1 { 
+    width: 1000px; 
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height:20px;
+}
+.scroll-div2 { 
+    width: 1000px; 
+}
