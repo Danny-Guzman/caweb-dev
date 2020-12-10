@@ -1,6 +1,6 @@
 /*!
  * ODWPI 
- */pre#odwpi_dev_output_screen{min-height:265px}textarea#odwpi_dev_php_coding_string,textarea#odwpi_dev_query_string{min-height:300px}.wmd-view-topscroll,.wmd-view{overflow-x:scroll;overflow-y:hidden;border:none 0px RED}.wmd-view-topscroll{height:20px}.scroll-div1{width:1000px;overflow-x:scroll;overflow-y:hidden;height:20px}.scroll-div2{width:1000px}select.form-control{height:calc(1.5em + .75rem + 2px) !important}/*!
+ */pre#odwpi_dev_output_screen{min-height:265px;white-space:pre-wrap}textarea#odwpi_dev_php_coding_string,textarea#odwpi_dev_query_string{min-height:300px}.wmd-view-topscroll,.wmd-view{overflow-x:scroll;overflow-y:hidden;border:none 0px RED}.wmd-view-topscroll{height:20px}.scroll-div1{width:1280px;overflow-x:scroll;overflow-y:hidden;height:20px}.scroll-div2{width:1280px}select.form-control{height:calc(1.5em + .75rem + 2px) !important}/*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
  * Copyright 2011-2019 Twitter, Inc.

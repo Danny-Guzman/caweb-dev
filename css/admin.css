@@ -3,6 +3,7 @@
  */
 pre#odwpi_dev_output_screen {
   min-height: 265px;
+  white-space: pre-wrap;
 }
 
 textarea#odwpi_dev_php_coding_string,
@@ -21,14 +22,14 @@ textarea#odwpi_dev_query_string {
 }
 
 .scroll-div1 {
-  width: 1000px;
+  width: 1280px;
   overflow-x: scroll;
   overflow-y: hidden;
   height: 20px;
 }
 
 .scroll-div2 {
-  width: 1000px;
+  width: 1280px;
 }
 
 /*

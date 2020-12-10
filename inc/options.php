@@ -5,7 +5,8 @@
  * @package ODWPI
  */
 
-add_action(is_multisite() ? 'network_admin_menu' : 'admin_menu', 'odwpi_dev_plugin_menu');
+add_action('admin_menu', 'odwpi_dev_plugin_menu');
+add_action('network_admin_menu', 'odwpi_dev_plugin_menu');
 
 /**
  * CAWeb NetAdmin Administration Menu Setup
@@ -15,22 +16,9 @@ add_action(is_multisite() ? 'network_admin_menu' : 'admin_menu', 'odwpi_dev_plug
  * @return void
  */
 function odwpi_dev_plugin_menu() {
-	$cap = is_multisite() ? 'manage_network_options' : 'manage_options';
 
-	$dev_allowed =  true; //odwpi_dev_allowed();
-
-	$setup = $dev_allowed ? 'odwpi_dev_main_page' : 'odwpi_dev_settings_page';
-	$page = $dev_allowed ? 'dev' : 'settings';
-
-	add_menu_page("ODWPI Dev", 'ODWPI Dev', $cap, "odwpi-$page", $setup, '');
-
-	// Add Main Menu
-	if ($dev_allowed) {
-		add_submenu_page('odwpi-dev', 'Development', 'Developer Panel', $cap, 'odwpi-dev', 'odwpi_dev_main_page');
-	}
-
-	// Add Settings Menu
-	//add_submenu_page('odwpi-dev', 'Settings', 'Settings', $cap, 'odwpi-settings', 'odwpi_dev_settings_page');
+	add_menu_page("ODWPI Dev", 'ODWPI Dev', 'manage_options', 'odwpi-dev', 'odwpi_dev_main_page', '');
+	add_submenu_page('odwpi-dev', 'Development', 'Developer Panel', 'manage_options', 'odwpi-dev', 'odwpi_dev_main_page');
 }
 
 /**
@@ -63,21 +51,4 @@ function odwpi_dev_update_settings() {
 
 	}
 	update_site_option('odwpi_dev_users', $dev);
-}
-
-/**
- * Options save message hook
- *
- * @param  mixed $error If there were any errors.
- *
- * @return void
- */
-function odwpi_dev_mime_option_notices( $error = false ) {
-	if ( true === $error ) {
-		print '<div class="notice notice-error is-dismissible"><p><strong>ODWPI</strong> some changes could not be saved.</p>
-			<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>';
-	} else {
-		print '<div class="notice notice-success is-dismissible"><p><strong>ODWPI</strong> changes updated successfully.</p>
-			<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>';
-	}
 }

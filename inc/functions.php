@@ -48,17 +48,3 @@ function odwpi_dev_rrmdir($dir) {
   } 
   return rmdir($dir);
 }
-
-/**
- * Determine whether User ID is a developer.
- *
- * @param  mixed $id User ID, if none provided then current user id is used.
- * @return boolean
- */
-function odwpi_dev_allowed( $id = '') {
-	$id = ! empty( $id ) ? $id : get_current_user_id();
-	
-	$developers = get_site_option('odwpi_dev_users', array());
-
-	return array_key_exists( $id, $developers);
-}
