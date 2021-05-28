@@ -1,5 +1,5 @@
 {
-    "name": "cawebpublishing/caweb",
+    "name": "odwpi/dev",
     "description": "Packages to help enforce WordPress Coding Standards",
     "require-dev": {
         "wp-coding-standards/wpcs": "^2.2.0",

@@ -16,7 +16,11 @@ add_action( 'admin_bar_menu', 'odwpi_dev_admin_bar_menu', 1000 );
  * @return void
  */
 function odwpi_dev_admin_bar_menu( $wp_admin_bar ) {
-	if ( current_user_can( 'manage_options' ) ) {
+	global $pagenow;
+
+	if ( current_user_can( 'manage_options' ) && 
+		( is_singular( array( 'post', 'page' ) ) || 'post.php'  === $pagenow )
+		) {
 		/* Add ODWPI WP Admin Bar Nodes */
 		$wp_admin_bar->add_node(
 			array(
