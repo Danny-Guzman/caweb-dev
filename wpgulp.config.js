@@ -11,13 +11,11 @@
 module.exports = {
 	adminCSS:[ // WP Backend Admin CSS
 		'assets/scss/admin.scss',
-		'assets/scss/codemirror/codemirror.css',
 	],
 	adminJS: [ // WP Backend Admin JS
 		'assets/js/bootstrap/bootstrap.bundle.js',
 		'assets/js/odwpi/helper.js',
 		'assets/js/odwpi/dual_scrollbar.js',
-		'assets/js/codemirror/codemirror.js',
 		'assets/js/odwpi/admin.js',
 	], 
 	frontendCSS: [], // Frontend CSS
