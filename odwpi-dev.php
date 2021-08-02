@@ -13,7 +13,7 @@ define( 'ODWPI_DEV_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ODWPI_DEV_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 add_action( 'init', 'odwpi_dev_init' );
-add_action('admin_enqueue_scripts', 'odwpi_dev_admin_enqueue_scripts_styles');
+add_action( 'admin_enqueue_scripts', 'odwpi_dev_admin_enqueue_scripts_styles' );
 
 /**
  * Initialization
@@ -32,12 +32,20 @@ function odwpi_dev_init() {
 	}
 }
 
-function odwpi_dev_admin_enqueue_scripts_styles($hook) {
-	$pages = array('toplevel_page_odwpi-dev');
+/**
+ * Admin Enqueue Scripts and Styles
+ *
+ * @link https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/
+ * @param  string $hook The current admin page.
+ *
+ * @return void
+ */
+function odwpi_dev_admin_enqueue_scripts_styles( $hook ) {
+	$pages = array( 'toplevel_page_odwpi-dev' );
 
-	$ver = get_plugin_data(__FILE__)['Version'];
+	$ver = get_plugin_data( __FILE__ )['Version'];
 
-	if ( ! in_array($hook, $pages)) {
+	if ( ! in_array( $hook, $pages, true ) ) {
 		return;
 	}
 
@@ -50,10 +58,10 @@ function odwpi_dev_admin_enqueue_scripts_styles($hook) {
 	*/
 	wp_register_script( 'odwpi-dev-boot1', 'https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js', array( 'jquery' ), '3.6.1', true );
 
-	// Enqueue Core Script 
-	wp_enqueue_script('odwpi-dev-core-js', $admin_js, array('jquery', 'odwpi-dev-boot1'), $ver);
+	// Enqueue Core Script.
+	wp_enqueue_script( 'odwpi-dev-core-js', $admin_js, array( 'jquery', 'odwpi-dev-boot1' ), $ver, false );
 
-	// Enqueue Admin CSS
-	wp_enqueue_style('odwpi-dev-admin-css', $admin_css, array(), $ver);
+	// Enqueue Admin CSS.
+	wp_enqueue_style( 'odwpi-dev-admin-css', $admin_css, array(), $ver );
 
 }

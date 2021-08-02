@@ -7241,6 +7241,7 @@ jQuery(document).ready(function($) {
     output.html('Evaluating your code...this may take a moment');		
   
     fd.append("action", "odwpi_dev_code");
+    fd.append("odwpi_dev_panel", $('#odwpi_dev_panel_nonce').val() );
   
     retrieveInputData($('textarea#odwpi_dev_php_coding_string'), fd);
   
