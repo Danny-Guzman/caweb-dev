@@ -1,32 +1,28 @@
 jQuery(document).ready(function($) {
   "use strict";
 
-  /* Navigation Tabs */
-  $('.odwpi-dev-nav-tab').click(function() {
-    var tabs = $('.odwpi-dev-nav-tab');
-    var selected_tab = $(this).attr('href');
-
-    tabs.each(function( index, value ) {
-      if( selected_tab !== $(value).attr("href") ){
-        $(value).removeClass('active');
-      }else{
-        $(value).addClass('active');
-      }
-      $(value).trigger('classChanged');
+  if( $('#odwpi_dev_php_coding_string').length ){
+    var php_coding_editor = CodeMirror.fromTextArea(document.getElementById('odwpi_dev_php_coding_string'), {
+      lineNumbers: true,
+      lineWrapping: true,
+      autoCloseBrackets: true,
+      autoCloseTags: true,
+      mode: 'php',
+      indentUnit: 4,
+      indentWithTabs: true
     });
-  });
+  }
 
-  $('.odwpi-dev-nav-tab').bind('classChanged', function(data){ 
-    var tab = $(data.target);
-    
-    if( tab.hasClass('active') ){
-      if( '#github' == tab.attr('href') ){
-        $('#git-info').removeClass('hidden');
-      }else{
-        $('#git-info').addClass('hidden');
-      }
-    }
-  });
+  if( $('#odwpi_dev_query_string').length ){
+    var sql_coding_editor = CodeMirror.fromTextArea(document.getElementById('odwpi_dev_query_string'), {
+      lineNumbers: true,
+      lineWrapping: true,
+      mode: 'sql',
+      indentUnit: 4,
+      indentWithTabs: true
+    });
+  }
+
 
   /* PHP Code */
   $('button#odwpi_dev_php_coding').click(function(){
@@ -37,9 +33,8 @@ jQuery(document).ready(function($) {
     output.html('Evaluating your code...this may take a moment');		
   
     fd.append("action", "odwpi_dev_code");
-    fd.append("odwpi_dev_panel", $('#odwpi_dev_panel_nonce').val() );
-  
-    retrieveInputData($('textarea#odwpi_dev_php_coding_string'), fd);
+    fd.append("odwpi_dev_panel", $('input[name="odwpi_dev_panel_nonce"]').val() );
+    fd.append("odwpi_dev_php_coding_string", php_coding_editor.getValue());
   
     jQuery.ajax({
       type: 'POST',
@@ -74,8 +69,8 @@ jQuery(document).ready(function($) {
     output.html('Querying the WordPress Database...this may take a moment');		
   
     fd.append("action", "odwpi_dev_query");
-  
-    retrieveInputData($('textarea#odwpi_dev_query_string'), fd);
+    fd.append("odwpi_dev_panel", $('input[name="odwpi_dev_panel_nonce"]').val() );
+    fd.append("odwpi_dev_query_string", sql_coding_editor.getValue() );
   
     jQuery.ajax({
       type: 'POST',
@@ -104,6 +99,7 @@ jQuery(document).ready(function($) {
     output.html('Testing API with your parameters...this may take a moment');		
     
     fd.append("action", "odwpi_dev_github_api_test");
+    fd.append("odwpi_dev_panel", $('input[name="odwpi_dev_panel_nonce"]').val() );
   
     retrieveInputData($('div#github input'), fd);
     

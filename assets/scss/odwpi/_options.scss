@@ -1,9 +1,16 @@
+/* Hide First Menu Link */
+li.toplevel_page_odwpi-dev .wp-submenu .wp-first-item{
+	display: none;
+}
+
 pre#odwpi_dev_output_screen{
 	min-height: 265px;
 	white-space: pre-wrap;
 }
 
-textarea#odwpi_dev_php_coding_string,
-textarea#odwpi_dev_query_string{
+textarea#odwpi_dev_php_coding_string + div,
+textarea#odwpi_dev_query_string + div{
 	min-height: 300px;
+	resize: vertical;
+	border: 1px solid gray;
 }

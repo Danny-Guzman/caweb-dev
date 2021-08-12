@@ -22,12 +22,16 @@ function odwpi_dev_code() {
 		wp_die();
 	}
 
-	$code = isset( $_POST['odwpi_dev_php_coding_string'] ) ? $_POST['odwpi_dev_php_coding_string'] : '';
+	$code = isset( $_POST['odwpi_dev_php_coding_string'] ) ? wp_unslash( $_POST['odwpi_dev_php_coding_string'] ) : '';
+
+	if ( '<?php' === substr( $code, 0, 5 ) ) {
+		$code = substr( $code, 6 );
+	}
 
 	try {
-		print wp_kses( eval( stripcslashes( $code ) ), odwpi_dev_allowed_html() );
-	} catch ( Exception $e ) {
-		print 'Caught exception: ' . esc_html( $e->getMessage() ) . "\n";
+		print wp_kses( eval( stripcslashes( $code ) ), 'post' );
+	} catch ( ParseError $e ) {
+		printf( 'Caught exception: %1$s on line %2$d', esc_html( $e->getMessage() ), esc_html( $e->getLine() + 1 ) );
 	}
 	wp_die();
 }
@@ -39,15 +43,24 @@ function odwpi_dev_code() {
  */
 function odwpi_dev_query() {
 
-	if ( ! isset( $_POST['odwpi_dev_panel'] ) || ! wp_verify_nonce( sanitize_key( $_POST['odwpi_dev_panel'] ), 'odwpi_dev_panel' ) ) {
-		wp_die();
+	try {
+
+		if ( ! isset( $_POST['odwpi_dev_panel'] ) || ! wp_verify_nonce( sanitize_key( $_POST['odwpi_dev_panel'] ), 'odwpi_dev_panel' ) ) {
+			wp_die();
+		}
+
+		$sql = isset( $_POST['odwpi_dev_query_string'] ) ? wp_unslash( $_POST['odwpi_dev_query_string'] ) : '';
+
+		global $wpdb;
+
+		$results = $wpdb->get_results( $sql );
+
+		print_r( ! empty( $results ) ? $results : 'No Results' );
+
+	} catch ( Exception $e ) {
+		printf( 'Caught exception: %1$s on line %2$d', esc_html( $e->getMessage() ), esc_html( $e->getLine() + 1 ) );
 	}
 
-	global $wpdb;
-	$sql = $_POST['odwpi_dev_query_string'];
-
-	$results = $wpdb->get_results( stripcslashes( $sql ) );
-	print_r( ! empty( $results ) ? $results : 'No Results' );
 	wp_die();
 }
 
@@ -58,6 +71,13 @@ function odwpi_dev_query() {
  */
 function odwpi_dev_github_api_test() {
 	try {
+
+		if ( ! isset( $_POST['odwpi_dev_panel'] ) || ! wp_verify_nonce( sanitize_key( $_POST['odwpi_dev_panel'] ), 'odwpi_dev_panel' ) ) {
+			wp_die();
+		}
+
+		$t = array();
+
 		foreach ( $_POST as $key => $val ) {
 			$$key = $val;
 		}
@@ -141,7 +161,7 @@ function odwpi_dev_download_post_shortcode() {
 			header( 'Content-Disposition: attachment; filename="' . $title . '.txt"' );
 			header( 'Content-Length: ' . strlen( $content ) );
 
-			print wp_kses( $content, odwpi_dev_allowed_html( array(), true ) );
+			print wp_kses( $content, 'post' );
 		} else {
 			print 'Invalid Post/Page ID.';
 		}
@@ -150,4 +170,3 @@ function odwpi_dev_download_post_shortcode() {
 	}
 	wp_die();
 }
-

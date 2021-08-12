@@ -41,7 +41,13 @@ function odwpi_dev_init() {
  * @return void
  */
 function odwpi_dev_admin_enqueue_scripts_styles( $hook ) {
+	$additional_pages = array( 'php', 'sql', 'github', 'settings' );
+
 	$pages = array( 'toplevel_page_odwpi-dev' );
+
+	foreach ( $additional_pages as $p ) {
+		$pages[] = 'odwpi-dev_page_odwpi-dev-' . $p;
+	}
 
 	$ver = get_plugin_data( __FILE__ )['Version'];
 

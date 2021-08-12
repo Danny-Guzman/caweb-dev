@@ -18,15 +18,15 @@ add_action( 'admin_bar_menu', 'odwpi_dev_admin_bar_menu', 1000 );
 function odwpi_dev_admin_bar_menu( $wp_admin_bar ) {
 	global $pagenow;
 
-	if ( current_user_can( 'manage_options' ) && 
-		( is_singular( array( 'post', 'page' ) ) || 'post.php'  === $pagenow )
+	if ( current_user_can( 'manage_options' ) &&
+		( is_singular( array( 'post', 'page' ) ) || 'post.php' === $pagenow )
 		) {
 		/* Add ODWPI WP Admin Bar Nodes */
 		$wp_admin_bar->add_node(
 			array(
 				'id'     => 'odwpi-dev-download-post-shortcode',
 				'title'  => 'Download Post Shortcode',
-				'href'   => admin_url( 'admin-ajax.php?action=odwpi_dev_download_post_shortcode&id=' . get_the_ID() ) ,
+				'href'   => admin_url( 'admin-ajax.php?action=odwpi_dev_download_post_shortcode&id=' . get_the_ID() ),
 			)
 		);
 	}

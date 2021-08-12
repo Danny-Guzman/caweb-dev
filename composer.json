@@ -2,14 +2,16 @@
     "name": "odwpi/dev",
     "description": "Packages to help enforce WordPress Coding Standards",
     "require-dev": {
-        "wp-coding-standards/wpcs": "^2.2.0",
-        "friendsofphp/php-cs-fixer": "^2.16.0",
+        "caweb/phpdoc": "dev-master",
+        "friendsofphp/php-cs-fixer": "^3.0.0",
         "phpcompatibility/phpcompatibility-wp": "*",
-        "roave/security-advisories": "dev-master"
+        "wp-coding-standards/wpcs": "^2.3.0",
+        "roave/security-advisories": "dev-master",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1"
     },
     "scripts": {
         "post-install-cmd": [
-            "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/phpcompatibility/phpcompatibility-wp,vendor/phpcompatibility/php-compatibility "
+            "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/phpcompatibility/php-compatibility,vendor/phpcompatibility/phpcompatibility-paragonie,vendor/phpcompatibility/phpcompatibility-wp"
         ]
         
     }
