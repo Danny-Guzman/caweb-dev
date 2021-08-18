@@ -11,6 +11,7 @@
 module.exports = {
 	adminCSS:[ // WP Backend Admin CSS
 		'node_modules/codemirror/lib/codemirror.css',
+		'node_modules/codemirror/addon/fold/foldgutter.css',
 		'assets/scss/admin.scss',
 	],
 	adminJS: [ // WP Backend Admin JS
@@ -25,6 +26,10 @@ module.exports = {
 		'node_modules/codemirror/mode/xml/xml.js',
 		'node_modules/codemirror/addon/edit/closebrackets.js',
 		'node_modules/codemirror/addon/edit/closetag.js',
+		'node_modules/codemirror/addon/fold/foldcode.js',
+		'node_modules/codemirror/addon/fold/foldgutter.js',
+		'node_modules/codemirror/addon/fold/brace-fold.js',
+		'node_modules/codemirror/addon/fold/xml-fold.js',
 		'assets/js/odwpi/helper.js',
 		'assets/js/odwpi/dual_scrollbar.js',
 		'assets/js/odwpi/admin.js',

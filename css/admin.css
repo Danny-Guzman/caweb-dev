@@ -521,6 +521,31 @@ span.CodeMirror-selectedtext {
   background: none;
 }
 
+.CodeMirror-foldmarker {
+  color: blue;
+  text-shadow: #b9f 1px 1px 2px, #b9f -1px -1px 2px, #b9f 1px -1px 2px, #b9f -1px 1px 2px;
+  font-family: arial;
+  line-height: .3;
+  cursor: pointer;
+}
+
+.CodeMirror-foldgutter {
+  width: .7em;
+}
+
+.CodeMirror-foldgutter-open,
+.CodeMirror-foldgutter-folded {
+  cursor: pointer;
+}
+
+.CodeMirror-foldgutter-open:after {
+  content: "\25BE";
+}
+
+.CodeMirror-foldgutter-folded:after {
+  content: "\25B8";
+}
+
 /*!
  * ODWPI 
  */
@@ -530,13 +555,13 @@ li.toplevel_page_odwpi-dev .wp-submenu .wp-first-item {
 }
 
 pre#odwpi_dev_output_screen {
-  min-height: 265px;
+  min-height: 285px;
   white-space: pre-wrap;
 }
 
 textarea#odwpi_dev_php_coding_string + div,
 textarea#odwpi_dev_query_string + div {
-  min-height: 300px;
+  min-height: 320px;
   resize: vertical;
   border: 1px solid gray;
 }
@@ -560,6 +585,12 @@ textarea#odwpi_dev_query_string + div {
 
 .scroll-div2 {
   width: 1280px;
+}
+
+.CodeMirror .cm-url {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 /*!

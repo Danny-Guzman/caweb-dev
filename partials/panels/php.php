@@ -8,7 +8,7 @@
 $odwpi_dev_sample_header = "/*\n * For information: \n * https://www.php.net/\n * https://www.w3schools.com/php/\n */\n\n";
 $odwpi_dev_sample_code   = "// Sample Code\n\$d = get_site_option('dev');\n\nprint_r( \$d );";
 
-$odwpi_dev_opening = "<?php\n" . $odwpi_dev_sample_header . $odwpi_dev_sample_code;
+$odwpi_dev_opening = "<?php\n" . $odwpi_dev_sample_header . $odwpi_dev_sample_code . "\n\n?>";
 ?>
 
 <!-- PHP Column -->

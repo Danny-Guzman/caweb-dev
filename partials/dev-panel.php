@@ -20,7 +20,7 @@ $odwpi_dev_page = substr( $odwpi_dev_page, strrpos( $odwpi_dev_page, '-', -1 ) +
 			require_once "panels/$odwpi_dev_page.php";
 		}
 
-		if ( 'settings' !== $odwpi_dev_page ) {
+		if ( ! in_array( $odwpi_dev_page, array( 'dev', 'settings' ), true ) ) {
 			require_once 'panels/output.php';
 		}
 
