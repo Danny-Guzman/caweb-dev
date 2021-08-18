@@ -32,6 +32,7 @@ module.exports = {
 		'node_modules/codemirror/addon/fold/xml-fold.js',
 		'assets/js/odwpi/helper.js',
 		'assets/js/odwpi/dual_scrollbar.js',
+		'assets/js/odwpi/codemirror.js',
 		'assets/js/odwpi/admin.js',
 	], 
 	frontendCSS: [], // Frontend CSS
