@@ -22142,8 +22142,9 @@ jQuery(document).ready(function($) {
   
     fd.append("action", "odwpi_dev_code");
     fd.append("odwpi_dev_panel", $('input[name="odwpi_dev_panel_nonce"]').val() );
-    fd.append("odwpi_dev_php_coding_string", php_coding_editor.getValue());
-  
+    fd.append("odwpi_dev_php_coding_string", $('#odwpi_dev_php_coding_string + .CodeMirror').get(0).CodeMirror.getValue());
+    
+
     jQuery.ajax({
       type: 'POST',
       url: ajaxurl,
@@ -22178,7 +22179,7 @@ jQuery(document).ready(function($) {
   
     fd.append("action", "odwpi_dev_query");
     fd.append("odwpi_dev_panel", $('input[name="odwpi_dev_panel_nonce"]').val() );
-    fd.append("odwpi_dev_query_string", sql_coding_editor.getValue() );
+    fd.append("odwpi_dev_query_string", $('#odwpi_dev_query_string + .CodeMirror').get(0).CodeMirror.getValue() );
   
     jQuery.ajax({
       type: 'POST',
