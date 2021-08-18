@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ODWPI Developer Tool
  * Plugin URI: ""
- * Description: Code in realtime, query against the database.
+ * Description: Code in realtime and query against the database.
  * Author: Jesus D. Guzman
  * Version: 2.0.0
  *
@@ -13,6 +13,7 @@ define( 'ODWPI_DEV_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ODWPI_DEV_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 add_action( 'init', 'odwpi_dev_init' );
+add_action( 'admin_init', 'odwpi_dev_admin_init' );
 add_action( 'admin_enqueue_scripts', 'odwpi_dev_admin_enqueue_scripts_styles' );
 
 /**
@@ -30,6 +31,20 @@ function odwpi_dev_init() {
 	foreach ( glob( __DIR__ . '/inc/*.php' ) as $file ) {
 		require_once $file;
 	}
+}
+
+/**
+ * ODWPI Admin Init
+ *
+ * Triggered before any other hook when a user accesses the admin area.
+ * Note, this does not just run on user-facing admin screens.
+ * It runs on admin-ajax.php and admin-post.php as well.
+ *
+ * @link https://codex.wordpress.org/Plugin_API/Action_Reference/admin_init
+ * @return void
+ */
+function odwpi_dev_admin_init() {
+	require_once ODWPI_DEV_PLUGIN_DIR . 'core/class-odwpi-dev-plugin-update.php';
 }
 
 /**

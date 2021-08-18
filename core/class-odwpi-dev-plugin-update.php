@@ -47,7 +47,7 @@ if ( ! class_exists( 'ODWPI_Dev_Plugin_Update' ) ) {
 		 *
 		 * @var string $transient_name Name of update transient.
 		 */
-		protected $transient_name = 'odwpi_update_plugins';
+		protected $transient_name = 'odwpi_dev_update_plugins';
 
 		/**
 		 * Member Variable
@@ -55,13 +55,6 @@ if ( ! class_exists( 'ODWPI_Dev_Plugin_Update' ) ) {
 		 * @var string $repo Plugin repo location.
 		 */
 		protected $repo = 'https://api.github.com/repos/Danny-Guzman/odwpi-dev';
-
-		/**
-		 * Member Variable
-		 *
-		 * @var string $token GitHub Repo Token.
-		 */
-		protected $token = '';
 
 		/**
 		 * Member Variable
@@ -86,8 +79,8 @@ if ( ! class_exists( 'ODWPI_Dev_Plugin_Update' ) ) {
 
 			$this->args = array(
 				'headers' => array(
-					'Authorization' => 'Basic ' . base64_encode( ':' . $this->token ),
-					'Accept:'       => 'application/vnd.github.v3+json',
+					'User-Agent' => 'WP-' . $this->plugin_name,
+					'Accept:'    => 'application/vnd.github.v3+json',
 					'application/vnd.github.VERSION.raw',
 					'application/octet-stream',
 				),
@@ -122,11 +115,10 @@ if ( ! class_exists( 'ODWPI_Dev_Plugin_Update' ) ) {
 		 */
 		public function download_package( $reply, $package, $upgrader ) {
 			if ( isset( $upgrader->skin->plugin_info ) && $upgrader->skin->plugin_info['Name'] === $this->plugin_name ) {
-				$theme = wp_remote_retrieve_body( wp_remote_get( $package, array_merge( $this->args, array( 'timeout' => 60 ) ) ) );
-				// Now use the standard PHP file functions.
-				$fp = fopen( sprintf( '%1$s/%2$s.zip', plugin_dir_path( __DIR__ ), $this->slug ), 'w' );
-				fwrite( $fp, $theme );
-				fclose( $fp );
+				$plugin = wp_remote_retrieve_body( wp_remote_get( $package, array_merge( $this->args, array( 'timeout' => 60 ) ) ) );
+				global $wp_filesystem;
+				$filename = sprintf( '%1$s/%2$s.zip', plugin_dir_path( __DIR__ ), $this->slug );
+				$wp_filesystem->put_contents( $filename, $plugin );
 
 				return sprintf( '%1$s/%2$s.zip', plugin_dir_path( __DIR__ ), $this->slug );
 			}
@@ -136,11 +128,12 @@ if ( ! class_exists( 'ODWPI_Dev_Plugin_Update' ) ) {
 		/**
 		 * Alternative API for checking for plugin updates.
 		 *
-		 * @param  array $update_transient Transient containing plugin updates.
+		 * @param  array|Object $update_transient Transient containing plugin updates.
 		 *
 		 * @return array
 		 */
 		public function odwpi_dev_check_plugin_update( $update_transient ) {
+
 			if ( ! isset( $update_transient->checked ) ) {
 				return $update_transient;
 			}
@@ -161,8 +154,8 @@ if ( ! class_exists( 'ODWPI_Dev_Plugin_Update' ) ) {
 					$obj->plugin         = $this->plugin_file;
 					$obj->new_version    = $payload->tag_name;
 					$obj->published_date = ( new DateTime( $payload->published_at ) )->format( 'm/d/Y' );
-					$obj->package        = $payload->zipball_url;
-					$obj->tested         = '4.9.4';
+					$obj->package        = str_replace( 'zipball', 'zipball/refs/tags', $payload->zipball_url );
+					$obj->tested         = '5.8.0';
 
 					$theme_response = array( $this->plugin_file => $obj );
 
@@ -291,7 +284,7 @@ if ( ! class_exists( 'ODWPI_Dev_Plugin_Update' ) ) {
 				'author'   => 'Jesus D. Guzman',
 				'name'     => sprintf( '<img src="%1$s/%2$s/logo.png" class="odwpi-dev-plugin-update-logo"> ODWPI', WP_PLUGIN_URL, plugin_basename( plugin_dir_path( __DIR__ ) ) ),
 				'sections' => array(
-					'Description' => '<p>A ODWPI Utility Plugin that allows for extra mime-type support not supported by WordPress. Also allows for mapping registered domains to their appropriate urls.</p><p>The following extra mime-types have been registered:</p><ul><li>application/x-mspublisher</li><li>application/vnd.ms-infopath</li><li>text/xml</li><li>application/vnd.google-earth.kml+xml</li><li>application/vnd.google-earth.kmz</li><li>x-image/x-icon</li></ul>',
+					'Description' => '<p>Code in realtime and query against the database.</p>',
 				),
 				'requires' => '4.7.0',
 			);
@@ -303,4 +296,3 @@ if ( ! class_exists( 'ODWPI_Dev_Plugin_Update' ) ) {
 }
 
 new ODWPI_Dev_Plugin_Update( plugin_basename( plugin_dir_path( __DIR__ ) ) );
-
