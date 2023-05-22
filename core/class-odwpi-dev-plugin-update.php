@@ -295,4 +295,4 @@ if ( ! class_exists( 'ODWPI_Dev_Plugin_Update' ) ) {
 	}
 }
 
-new ODWPI_Dev_Plugin_Update( plugin_basename( plugin_dir_path( __DIR__ ) ) );
+// new ODWPI_Dev_Plugin_Update( plugin_basename( plugin_dir_path( __DIR__ ) ) );

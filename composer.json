@@ -3,16 +3,21 @@
     "description": "Packages to help enforce WordPress Coding Standards",
     "require-dev": {
         "caweb/phpdoc": "dev-master",
+        "wp-coding-standards/wpcs": "^2.3.0",
         "friendsofphp/php-cs-fixer": "^3.0.0",
         "phpcompatibility/phpcompatibility-wp": "*",
-        "wp-coding-standards/wpcs": "^2.3.0",
         "roave/security-advisories": "dev-master",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1"
+        "phpdocumentor/shim": "^3.1"
     },
     "scripts": {
         "post-install-cmd": [
             "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/phpcompatibility/php-compatibility,vendor/phpcompatibility/phpcompatibility-paragonie,vendor/phpcompatibility/phpcompatibility-wp"
         ]
         
+    },
+    "config": {
+        "allow-plugins": {
+            "phpdocumentor/shim": true
+        }
     }
 }

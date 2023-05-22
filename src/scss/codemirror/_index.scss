@@ -1,0 +1,26 @@
+#odwpi-editor{
+    .cm-editor.cm-focused {
+        outline: none;
+    }
+
+    #odwpi-editor-output {
+    
+        #odwpi-editor-output-topscroll{
+            overflow-y: hidden;
+            overflow-x: auto;
+            height: 20px;
+        }    
+        
+    }
+
+    // bootstrap icons are 38px in width
+    a[class^="bi-"],
+    a[class*=" bi-"]{
+        max-width: 34px;
+    }
+
+    // removes the arrow when used as a dropdown icon
+    a.bi-three-dots-vertical::after {
+        border: 0;
+    }
+}

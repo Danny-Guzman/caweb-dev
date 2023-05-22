@@ -1,12 +1,16 @@
-_notes/*
-*/_notes/
-*/Thumbs.db
-*/.vscode/
+# Development files
 /.vscode/
-*/node_modules/
 /node_modules/
-*/vendor/
 /vendor/
-composer.lock
-package-lock.json
-/log/
+_notes/
+
+# Ignore temporary OS files
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# wp-env files
+.wp-env.override.json
