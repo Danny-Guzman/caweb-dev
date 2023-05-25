@@ -4,8 +4,8 @@ export default function phpLint(view){
     let lintDiagnostics = [];
 
     syntaxTree(view.state).cursor().iterate(node => {
-        console.log(node.name);
-        console.log(node);
+        //console.log(node.name);
+        //console.log(node);
         /*
         // no regex
         if (node.name == "RegExp"){
