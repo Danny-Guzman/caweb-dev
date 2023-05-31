@@ -1,0 +1,19 @@
+/*!
+ * ODWPI 
+ */
+ @import "./codemirror/";
+ @import "./bootstrap";
+
+/* options page styles */
+.odwpi-dev-tool-img{
+    height: 96px;
+    width: 96px;
+}
+.odwpi-dev-tool-icon{
+    font-size: 5rem;
+}
+
+input[type="radio"],
+input[type="checkbox"]{
+    background-color: transparent !important;
+}

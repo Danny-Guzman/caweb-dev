@@ -21,7 +21,7 @@ function odwpi_dev_plugin_menu() {
 	add_menu_page( 'ODWPI Dev', 'ODWPI Dev', $cap, 'odwpi-dev', 'odwpi_dev_main_page', '' );
 
 	add_submenu_page( 'odwpi-dev', 'IDE', 'IDE', $cap, 'odwpi-dev-ide', 'odwpi_dev_main_page' );
-	add_submenu_page( 'odwpi-dev', 'Export', 'Export', $cap, 'odwpi-dev-port', 'odwpi_dev_main_page' );
+	//add_submenu_page( 'odwpi-dev', 'Port', 'Port', $cap, 'odwpi-dev-port', 'odwpi_dev_main_page' );
 
 	//add_submenu_page( 'odwpi-dev', 'Settings', 'Settings', $cap, 'odwpi-dev-settings', 'odwpi_dev_main_page' );
 
@@ -41,7 +41,6 @@ function odwpi_dev_main_page() {
 
 	?>
 	<div class="container-fluid mt-4">
-		<input type="hidden" id="odwpi_dev_nonce" value="<?php print esc_attr( $nonce ); ?>" />
 		<div id="odwpi-dev-page" class="p-3 me-3 bg-white overflow-hidden">
 			<?php
 				if ( ! in_array($page, array('ide', 'port'), true ) ) {

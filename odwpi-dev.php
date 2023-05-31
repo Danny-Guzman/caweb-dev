@@ -13,7 +13,7 @@ define( 'ODWPI_DEV_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ODWPI_DEV_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 add_action( 'init', 'odwpi_dev_init' );
-add_action( 'admin_enqueue_scripts', 'odwpi_dev_admin_enqueue_scripts_styles' );
+add_action( 'admin_enqueue_scripts', 'odwpi_dev_admin_enqueue_scripts_styles', 99 );
 
 /**
  * Initialization
@@ -57,8 +57,10 @@ function odwpi_dev_admin_enqueue_scripts_styles( $hook ) {
 
 	$admin_js  = odwpi_dev_get_min_file( 'dist/admin.js', 'js' );
 
+	wp_register_script( 'odwpi-dev-core', $admin_js, array( 'jquery' ), $ver, true );
+
 	// Enqueue Core Script.
-	wp_enqueue_script( 'odwpi-dev-core-js', $admin_js, array( 'jquery' ), $ver, false );
+	wp_enqueue_script( 'odwpi-dev-core' );
 
 
 }

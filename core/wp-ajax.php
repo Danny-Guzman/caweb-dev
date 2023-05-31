@@ -8,6 +8,8 @@
 
 add_action( 'wp_ajax_odwpi_dev_code', 'odwpi_dev_code' );
 add_action( 'wp_ajax_odwpi_dev_download_post_shortcode', 'odwpi_dev_download_post_shortcode' );
+add_action( 'wp_ajax_odwpi_dev_export', 'odwpi_dev_export' );
+add_action( 'wp_ajax_odwpi_dev_import', 'odwpi_dev_import' );
 
 /**
  * Print output of evaluated code
@@ -49,9 +51,20 @@ function odwpi_dev_code() {
 
 			print_r( ! empty( $results ) ? $results : 'No Results' );
 		}
-	} catch ( ParseError $e ) {
-		printf( 'Caught exception: %1$s on line %2$d', esc_html( $e->getMessage() ), esc_html( $e->getLine() + 1 ) );
+	} catch ( Error $e ) {
+		/**
+		 * @see https://www.php.net/manual/en/language.exceptions.php
+		 * @see https://www.php.net/manual/en/language.errors.php7.php
+		 * @see https://www.php.net/manual/en/ref.errorfunc.php
+		 */
+		printf( 'Caught Error: %1$s on line %2$d%3$s%4$s', 
+			esc_html( $e->getMessage() ), 
+			esc_html( $e->getLine() + 1 ),
+			PHP_EOL,
+			$e->getTraceAsString()
+		);
 	}	
+
 	wp_die();
 }
 
@@ -84,5 +97,128 @@ function odwpi_dev_download_post_shortcode() {
 	} catch ( Exception $e ) {
 		print 'Caught exception: ' . esc_html( $e->getMessage() ) . "\n";
 	}
+	wp_die();
+}
+
+
+function odwpi_dev_export(){
+
+	
+	if ( ! isset( $_POST['odwpi_dev_export_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['odwpi_dev_export_nonce'] ), 'odwpi_dev_export_nonce' ) ) {
+		wp_die();
+	}
+	
+	$nav_selection = isset( $_POST['nav-selection'] ) ? wp_unslash( $_POST['nav-selection'] ) : '';
+	
+	try {
+		$menus = array();
+
+		if( ! empty( $nav_selection ) ){
+			$navs = array();
+			$registered_nav_locations = get_nav_menu_locations();
+
+			// get all navigation menus.
+			if( 'all-navs' === $nav_selection ){
+				$navs = wp_get_nav_menus();
+			}else{
+				$nav_locations = isset( $_POST['nav-selection'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['nav-location'] ) ) : array();
+
+				foreach( $nav_locations as $location ){
+					$m = wp_nav_menu( array(
+						'echo' => false,
+  						'theme_location' => $location
+					) );
+					
+					if( is_object( $m ) ) {
+						$navs[] = $m->menu;
+					}
+				}
+			}
+
+			foreach( $navs as $nav ){	
+				$obj = array();
+				$term_id = $nav->term_id;
+
+				// Set navigation name.
+				$obj['name'] = $nav->name;
+
+				// set navigation location.
+				if( in_array( $term_id, $registered_nav_locations, true ) ){
+					$obj['theme_location'] = array_search( $term_id, $registered_nav_locations );
+				}
+
+				// get menu items.
+				$menuitems = wp_get_nav_menu_items( $term_id, array( 'order' => 'DESC' ) );
+
+				// If a top level nav item, menu_item_parent = 0.
+				if ( ! $caweb_item->menu_item_parent ) {
+				
+				}
+
+				// iterate over menut items.
+				foreach( $menuitems as $item ){
+					// get menu item post meta.
+					$item->meta = get_post_meta( $item->ID );
+
+
+				}
+
+				$obj['menu'] = $menuitems;
+
+				$menus[] = (object)$obj;
+			}
+		}
+
+		$output = json_encode( array(
+			'navigation' => $menus
+		) );
+
+		print_r( $output );
+		
+		wp_die();
+		
+	} catch ( Error $e ) {
+		/**
+		 * @see https://www.php.net/manual/en/language.exceptions.php
+		 * @see https://www.php.net/manual/en/language.errors.php7.php
+		 * @see https://www.php.net/manual/en/ref.errorfunc.php
+		 */
+		printf( 'Caught Error: %1$s on line %2$d%3$s%4$s', 
+			esc_html( $e->getMessage() ), 
+			esc_html( $e->getLine() + 1 ),
+			PHP_EOL,
+			$e->getTraceAsString()
+		);
+	}	
+
+	wp_die();
+
+}
+
+function odwpi_dev_import(){
+	
+	if ( ! isset( $_POST['odwpi_dev_import_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['odwpi_dev_import_nonce'] ), 'odwpi_dev_import_nonce' ) ) {
+		wp_die();
+	}
+
+	$export = file_get_contents( $_FILES['file-0']['tmp_name'] );
+
+	try{
+		print_r( json_decode($export) );
+
+	} catch ( Error $e ) {
+		/**
+		 * @see https://www.php.net/manual/en/language.exceptions.php
+		 * @see https://www.php.net/manual/en/language.errors.php7.php
+		 * @see https://www.php.net/manual/en/ref.errorfunc.php
+		 */
+		printf( 'Caught Error: %1$s on line %2$d%3$s%4$s', 
+			esc_html( $e->getMessage() ), 
+			esc_html( $e->getLine() + 1 ),
+			PHP_EOL,
+			$e->getTraceAsString()
+		);
+	}	
+
 	wp_die();
 }

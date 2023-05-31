@@ -8,7 +8,9 @@
     "url": "https://github.com/Danny-Guzman/CAWeb/"
   },
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "webpack-cli build"
+  },
   "devDependencies": {
     "@codemirror/lang-php": "^6.0.1",
     "@codemirror/lang-sql": "^6.5.0",
@@ -19,11 +21,12 @@
     "bootstrap-icons": "^1.10.5",
     "codemirror": "^6.0.1",
     "css-loader": "^6.7.4",
+    "file-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^2.7.6",
     "postcss-loader": "^7.3.0",
     "sass": "^1.62.1",
     "sass-loader": "^13.3.0",
     "style-loader": "^3.3.3",
-    "w3c-keyname": "^2.2.7",
-    "webpack": "^5.84.0"
+    "webpack": "^5.84.1"
   }
 }

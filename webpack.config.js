@@ -3,40 +3,54 @@
  * @see https://getbootstrap.com/docs/5.3/getting-started/webpack/#import-bootstrap
  * @see https://www.toptal.com/react/webpack-react-tutorial-pt-1
  */
-const path = require('path');
-
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 //import path from 'path';
 
 module.exports = {
   mode: 'none',
+  plugins: [new MiniCssExtractPlugin({
+    linkType: "text/css",
+  })],
   entry: {
     admin: [
-      './src/scss/admin.scss',
+      './src/scripts/admin',
+      './src/styles/admin.scss',
       'bootstrap/dist/js/bootstrap.bundle.js',
-      './src/js/codemirror/',
+      './src/scripts/codemirror/',
     ]
   },
   module:{
       rules: [
         { 
-          test: /\.s[ac]ss$/i, 
+          test: /\.[s]?css$/i, 
           use: [
-            'style-loader', // Adds CSS to the DOM by injecting a `<style>` tag
-            'css-loader', // Interprets `@import` and `url()` like `import/require()` and will resolve them
+           //MiniCssExtractPlugin.loader,
+           'style-loader',
+           'css-loader', // Interprets `@import` and `url()` like `import/require()` and will resolve them
             {
               // Loader for webpack to process CSS with PostCSS
               loader: 'postcss-loader',
               options: {
                 postcssOptions: {
-                  plugins: () => [
-                    autoprefixer
+                  plugins: [
+                    "autoprefixer" ,
                   ]
                 }
               }
             },
-            'sass-loader', // Loads a SASS/SCSS file and compiles it to CSS
+            'sass-loader', // Loads a SASS/SCSS file and compiles it to CSS,
+            /*{
+              loader: 'style-loader',
+              options: {
+                injectType: 'linkTag'
+              }
+            },*/
+            //'file-loader',
           ]
         }
       ],
+  },
+  output: {
+    clean: true
   }
 }
