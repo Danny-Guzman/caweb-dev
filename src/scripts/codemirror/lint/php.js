@@ -2,26 +2,40 @@ import {syntaxTree} from "@codemirror/language"
 
 export default function phpLint(view){
     let lintDiagnostics = [];
+    let lintActions = [{
+      name: "Remove",
+      apply(view, from, to) { 
+        view.dispatch({
+          changes: {
+            from: 0, 
+            to, 
+            insert:'hi'
+          }
+        }) 
+      }
+    }];
 
     syntaxTree(view.state).cursor().iterate(node => {
-        //console.log(node.name);
-        //console.log(node);
-        /*
-        // no regex
-        if (node.name == "RegExp"){
-          lintDiagnostics.push({
-            from: node.from,
-            to: node.to,
-            severity: "warning",
-            message: "Regular expressions are FORBIDDEN",
-            actions: [{
-              name: "Remove",
-              apply(view, from, to) { view.dispatch({changes: {from, to}}) }
-            }]
-          })
-        } 
-        */
-      })
+      if( node.type.isError ){
+        lintDiagnostics.push({
+          from: node.from,
+          to: node.to,
+          severity: "error",
+          message: "An error was detected",
+          actions: []
+        })
+      }
 
-      return lintDiagnostics;
+    })
+    /*
+    syntaxTree(view.state).cursor().iterate(node => {
+      
+      if( node.type.isError ){
+        console.log(node);
+        console.log(`from: ${node.from}, to: ${node.to}`);
+        
+      }
+    })*/
+
+    return lintDiagnostics;
 }

@@ -1,10 +1,12 @@
 import {showPanel} from "@codemirror/view";
 import {language} from "@codemirror/language"
-import {Compartment, Text} from "@codemirror/state";
+import {Compartment, EditorState} from "@codemirror/state";
 
-import {php} from "@codemirror/lang-php";
+import {php, phpLanguage} from "@codemirror/lang-php";
 import {javascript} from "@codemirror/lang-javascript";
 import {sql} from "@codemirror/lang-sql";
+
+import {phpCompletions, wpCompletions} from "./autocomplete";
 
 const languageConf = new Compartment
 
@@ -141,7 +143,7 @@ const playButton = (view) => {
   
   // add listeners
   playButton.addEventListener('click', () => {
-    runCommand(view.state.doc.text.join('\n'))
+    runCommand(view.state.doc.toString())
   } )
 
   return playButton;
@@ -164,10 +166,16 @@ const toolBarPanel = (view) => {
   }
 }
 
-const toolBar = () => {
+const toolBar = (view) => {
   return [
     showPanel.of(toolBarPanel), 
-    languageConf.of( php() )
+    languageConf.of( php() ),
+    phpLanguage.data.of( {
+      autocomplete: phpCompletions
+    } ),
+    phpLanguage.data.of( {
+      autocomplete: wpCompletions
+    } )
   ]
 } 
 

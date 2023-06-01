@@ -9,7 +9,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "webpack-cli build"
+    "build": "webpack-cli build",
+    "watch": "webpack-cli watch"
   },
   "devDependencies": {
     "@codemirror/lang-php": "^6.0.1",

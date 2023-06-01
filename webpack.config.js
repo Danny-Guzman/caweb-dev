@@ -11,6 +11,12 @@ module.exports = {
   plugins: [new MiniCssExtractPlugin({
     linkType: "text/css",
   })],
+  output: {
+    clean: true
+  },
+  experiments: {
+    topLevelAwait: true
+  },
   entry: {
     admin: [
       './src/scripts/admin',
@@ -49,8 +55,5 @@ module.exports = {
           ]
         }
       ],
-  },
-  output: {
-    clean: true
   }
 }
