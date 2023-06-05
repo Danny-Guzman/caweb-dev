@@ -5,19 +5,10 @@
  */
 const phpSnippets = require('./php.json');
 
-let options = [];
+let phpCompletions = [];
 
 Object.entries(phpSnippets).forEach((snippet) => {
-    options.push(snippet[1]);
+    phpCompletions.push(snippet[1]);
 });
 
-export default function phpCompletions(context) {
-    let word = context.matchBefore(/\w*/)
-    if (word.from == word.to && !context.explicit){
-        return null
-    }
-    return {
-        from: word.from,
-        options: options
-    }
-}
+export default phpCompletions;

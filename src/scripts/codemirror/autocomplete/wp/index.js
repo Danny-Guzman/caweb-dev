@@ -13,7 +13,7 @@ const snippetJSONURL = 'https://raw.githubusercontent.com/jason-pomerleau/vscode
 
 let snippets = await fetch(snippetJSONURL).then((response) => response.json() )
 
-let options = [];
+let phpCompletions = [];
 
 Object.entries(snippets).forEach((snippet) => {
     let type = snippet.toString().substring(0, snippet.toString().indexOf(': '));
@@ -36,16 +36,7 @@ Object.entries(snippets).forEach((snippet) => {
             completion.type = 'function';
             break;
     }
-    options.push(completion);
+    phpCompletions.push(completion);
 });
 
-export default function wpCompletions(context) {
-    let word = context.matchBefore(/\w*/)
-    if (word.from == word.to && !context.explicit){
-        return null
-    }
-    return {
-        from: word.from,
-        options: options
-    }
-}
+export default phpCompletions;

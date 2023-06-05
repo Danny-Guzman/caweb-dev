@@ -14,13 +14,18 @@
     }
 
     // bootstrap icons are 38px in width */
-    a[class^="bi-"],
-    a[class*=" bi-"]{
+    button[class^="bi-"],
+    button[class*=" bi-"]{
         max-width: 34px;
     }
 
     // removes the arrow when used as a dropdown icon
-    a.bi-three-dots-vertical::after {
-        border: 0;
+    button.bi-three-dots-vertical{
+        &::after {
+            border: 0;
+        }
+        &:focus {
+            border-color: var(--bs-btn-active-border-color);
+        }
     }
 }

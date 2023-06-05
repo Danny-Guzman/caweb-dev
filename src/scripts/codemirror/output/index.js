@@ -1,6 +1,6 @@
 import {showPanel} from "@codemirror/view";
 
-const dockToBottom = () =>{
+function dockToBottom(){
   // parent container
   document.getElementById('odwpi-editor').classList.remove('row');
 
@@ -13,7 +13,7 @@ const dockToBottom = () =>{
   OutputViewUpdated();
 }
 
-const dockToRight = () =>{
+function dockToRight(){
   // parent container
   document.getElementById('odwpi-editor').classList.add('row');
 
@@ -27,9 +27,9 @@ const dockToRight = () =>{
 
 }
 
-const addThreeDots = () => {
+function addThreeDots(){
   var threeDotDropdown = document.createElement('DIV'); 
-  var threeDotButton = document.createElement('A');
+  var threeDotButton = document.createElement('BUTTON');
 
   var threeDotContextMenu = document.createElement('UL');
 
@@ -42,10 +42,11 @@ const addThreeDots = () => {
   threeDotDropdown.classList.add('dropdown');
 
   // threeDotButton
-  threeDotButton.classList.add('bi', 'bi-three-dots-vertical', 'cursor-pointer', 'fs-4', 'text-secondary', 'dropdown-toggle', 'btn', 'btn-sm');
+  threeDotButton.classList.add('btn',  'btn-sm', 'dropdown-toggle', 'bi', 'bi-three-dots-vertical', 'text-secondary', 'fs-4');
   threeDotButton.href = "#";
   threeDotButton.ariaExpanded = false;
   threeDotButton.dataset.bsToggle = "dropdown";
+  threeDotButton.setAttribute('tabindex', 0);
 
   // context menu
   threeDotContextMenu.classList.add('dropdown-menu', 'p-2');
@@ -77,7 +78,7 @@ const addThreeDots = () => {
   return threeDotDropdown;
 }
 
-const OutputViewUpdated = () => {
+function OutputViewUpdated(){
   let outputView = document.getElementById('odwpi-editor-output-view')
 
   let topScrollDiv = document.getElementById('odwpi-editor-output-topscroll');
@@ -95,7 +96,8 @@ const OutputViewUpdated = () => {
 
 }
 
-export function showOutput(view){
+
+export default function showOutput (parentContainer){
   var key = 'odwpi-editor-output';
  
   var outputDiv = document.createElement('DIV');
@@ -111,11 +113,11 @@ export function showOutput(view){
 
   // output container
   outputDiv.id = key;
-  outputDiv.classList.add('border', 'border-4');
+  outputDiv.classList.add('border', 'border-3');
 
   // header
   headerDiv.id = `${key}-toolbar`;
-  headerDiv.classList.add('d-flex');
+  headerDiv.classList.add('d-flex', 'border', 'border-3');
 
   headerLbl.classList.add('align-self-center', 'p-2', 'me-auto');
   headerLbl.innerText = 'Output:';
@@ -141,8 +143,8 @@ export function showOutput(view){
   outputDiv.append(topScrollDiv);
   outputDiv.append(outputView);
 
-
-  view.dom.parentElement.parentElement.append(outputDiv);
+  //view.dom.parentElement.parentElement.append(outputDiv);
+  parentContainer.append(outputDiv);
 
   // dock output to the right
   dockToRight();
@@ -158,4 +160,3 @@ export function showOutput(view){
   });
 
 }
-

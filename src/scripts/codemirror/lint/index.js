@@ -9,4 +9,10 @@ const regexLinter = linter(view => {
   );
 })
 
-export {regexLinter, lintGutter};
+const linting = [
+    regexLinter, 
+    lintGutter()
+  ];
+
+  
+export default linting;

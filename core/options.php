@@ -41,7 +41,7 @@ function odwpi_dev_main_page() {
 
 	?>
 	<div class="container-fluid mt-4">
-		<div id="odwpi-dev-page" class="p-3 me-3 bg-white overflow-hidden">
+		<div id="odwpi-dev-page" class="p-3 me-3 bg-white">
 			<?php
 				if ( ! in_array($page, array('ide', 'port'), true ) ) {
 			?>

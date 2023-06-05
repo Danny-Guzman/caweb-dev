@@ -29,8 +29,8 @@ function wordCountPanel(view){
                 }
             }
         }
-    }
-
-export function wordCounter() {
-    return showPanel.of(wordCountPanel)
 }
+
+const wordCounter = [showPanel.of(wordCountPanel)];
+
+export default wordCounter;
