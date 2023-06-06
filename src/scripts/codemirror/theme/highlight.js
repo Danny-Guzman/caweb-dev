@@ -7,6 +7,8 @@
 import {Tag, tags} from "@lezer/highlight"
 import { syntaxHighlighting, HighlightStyle } from "@codemirror/language"
 
+const PhpOpen = Tag.define();
+
 const defaultStyle = syntaxHighlighting(
     HighlightStyle.define(
         [
@@ -28,7 +30,7 @@ const defaultStyle = syntaxHighlighting(
             },
             {
                 tag: tags.keyword,
-                color: 'darkkhaki'
+                color: 'darkmagenta'
             },
             {
                 tag: tags.definitionKeyword,
@@ -37,6 +39,22 @@ const defaultStyle = syntaxHighlighting(
             {
                 tag: tags.controlKeyword,
                 color: 'darkmagenta'
+            },
+            {
+                tag: tags.processingInstruction,
+                color: 'blue'
+            },
+            {
+                tag: tags.function(tags.variableName),
+                color: 'darkkhaki'
+            },
+            {
+                tag: tags.name,
+                color: 'blue'
+            },
+            {
+                tag: tags.variableName,
+                color: 'black'
             }
         ],
         {

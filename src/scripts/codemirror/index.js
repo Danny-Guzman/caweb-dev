@@ -1,7 +1,6 @@
 import {EditorView, basicSetup } from "codemirror";
 
 import {preferredSetup, phpMsg} from './config';
-import showOutput from './output';
 
 class ODWPI_IDE extends HTMLElement {
   key = 'odwpi-editor';
