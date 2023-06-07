@@ -4,10 +4,8 @@
  * @see https://codemirror.net/examples/styling/#highlighting
  */
 
-import {Tag, tags} from "@lezer/highlight"
+import {tags} from "@lezer/highlight"
 import { syntaxHighlighting, HighlightStyle } from "@codemirror/language"
-
-const PhpOpen = Tag.define();
 
 const defaultStyle = syntaxHighlighting(
     HighlightStyle.define(

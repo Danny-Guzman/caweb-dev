@@ -2,6 +2,26 @@ import {showPanel} from "@codemirror/view";
 
 import {execute, test, switchLanguages} from '../commands';
 
+function navLink(){
+
+}
+
+/*
+let navigation = [
+  {
+    label: 'File',
+    subnav: [
+      {
+        label: 'Run',
+        icon: 'play-fill',
+        keymap: 'Ctrl + s',
+        command: execute(view)
+      }
+    ]
+  }
+]
+*/
+
 function langSelector(view){
   var modeDiv = document.createElement('DIV');
   var modeLbl = document.createElement('SPAN');
@@ -62,7 +82,7 @@ function playButton(view){
 
   // play button
   playButton.id = 'odwpi-editor-execute';
-  playButton.classList.add('bg-transparent', 'bi', 'bi-play-fill', 'text-success', 'fs-4', 'border-0', 'border-end', 'border-2', 'text-center', 'w-100', 'align-self-center');
+  playButton.classList.add('bg-transparent', 'bi', 'bi-play-fill', 'text-success', 'fs-4', 'border-0', 'border-end', 'border-2', 'text-center', 'align-self-center');
   playButton.setAttribute('tabindex', 0);
   // add listeners
   playButton.addEventListener('click', () => {
@@ -77,7 +97,7 @@ function testButton(view){
 
   // test button
   testButton.id = 'odwpi-editor-execute';
-  testButton.classList.add('bg-transparent', 'bi', 'bi-code-slash', 'text-danger', 'fs-4', 'border-0', 'text-center', 'w-100', 'align-self-center');
+  testButton.classList.add('bg-transparent', 'bi', 'bi-code-slash', 'text-danger', 'fs-4', 'border-0', 'text-center', 'align-self-center');
   testButton.setAttribute('tabindex', 0);
   // add listeners
   testButton.addEventListener('click', () => {
@@ -92,11 +112,12 @@ function toolBarPanel(view){
 
   // toolbar container
   toolbarDiv.id = 'odwpi-editor-toolbar';
-  toolbarDiv.classList.add('border', 'border-3', 'd-flex');
+  toolbarDiv.classList.add('d-flex');
 
   toolbarDiv.append(playButton(view));
   toolbarDiv.append(langSelector(view));
-  toolbarDiv.append(testButton(view));
+  
+  //toolbarDiv.append(testButton(view));
 
 
   return {
@@ -105,6 +126,8 @@ function toolBarPanel(view){
   }
 }
 
-const toolBar = [ showPanel.of(toolBarPanel) ];
+const toolBar = [ 
+  showPanel.of(toolBarPanel),
+];
 
 export default toolBar

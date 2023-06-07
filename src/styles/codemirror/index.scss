@@ -1,10 +1,19 @@
 odwpi-ide{
-    .cm-editor.cm-focused {
+    .cm-panels-top,
+    #odwpi-editor-output-toolbar{
+        z-index: 1;
+        top: 32px !important
+    }
+
+    .cm-editor.cm-focused{
         outline: none;
     }
 
     #odwpi-editor-output {
-    
+        #odwpi-editor-output-toolbar{
+            background-color: var(--bs-body-bg);
+        }
+
         #odwpi-editor-output-topscroll{
             overflow-y: hidden;
             overflow-x: auto;
@@ -14,9 +23,9 @@ odwpi-ide{
     }
 
     // bootstrap icons are 38px in width */
-    button[class^="bi-"],
-    button[class*=" bi-"]{
-        max-width: 34px;
+    button[class*="bi-"]{
+        max-width: 45px;
+        width: 100%;
     }
 
     // removes the arrow when used as a dropdown icon

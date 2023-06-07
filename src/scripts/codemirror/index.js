@@ -28,6 +28,9 @@ class ODWPI_IDE extends HTMLElement {
     
     this.showOutput();
 
+    // adding width auto to the lint gutter, makes it so the gutter is only present if errors are showing.
+    document.querySelector('odwpi-ide .cm-gutter-lint').classList.add('w-auto');
+
   }
 
   showOutput(){
@@ -45,11 +48,11 @@ class ODWPI_IDE extends HTMLElement {
     // output container
     outputDiv.id = `${this.key}-output`;
 
-    outputDiv.classList.add('border', 'border-3');
+    outputDiv.classList.add('border', 'border-3', 'd-flex', 'flex-column');
 
     // header
     headerDiv.id = `${this.key}-output-toolbar`;
-    headerDiv.classList.add('d-flex', 'border', 'border-3');
+    headerDiv.classList.add('d-flex', 'position-sticky', 'border-2', 'border-bottom');
 
     headerLbl.classList.add('align-self-center', 'p-2', 'me-auto');
     headerLbl.innerText = 'Output:';
@@ -78,7 +81,6 @@ class ODWPI_IDE extends HTMLElement {
 
     // dock output to the right
     this.dockToRight();
-
 
     // add event listeners
     topScrollDiv.addEventListener('scroll', function(e){
@@ -124,11 +126,17 @@ class ODWPI_IDE extends HTMLElement {
 
     // dock bottom
     dockBottom.classList.add('dropdown-item', 'bi', 'bi-box-arrow-down', 'p-0', 'text-center', 'cursor-pointer');
-    dockBottom.addEventListener('click', this.dockToBottom )
+    dockBottom.addEventListener('click', (e) => {
+      this.dockToBottom();
+      this.OutputViewUpdated()
+    } )
 
     // dock right
     dockRight.classList.add('dropdown-item', 'bi', 'bi-box-arrow-right', 'p-0', 'text-center', 'cursor-pointer');
-    dockRight.addEventListener('click', this.dockToRight )
+    dockRight.addEventListener('click', (e) => {
+      this.dockToRight();
+      this.OutputViewUpdated()
+    } )
 
     dockLI.append(dockLbl)
     dockLI.append(dockBottom);
@@ -145,7 +153,7 @@ class ODWPI_IDE extends HTMLElement {
   
   dockToBottom(){
     // parent container
-    document.getElementById('odwpi-editor').classList.remove('row');
+    this.classList.remove('row');
 
     // editor
     document.getElementById('odwpi-editor-container').classList.remove('col-sm-12', 'col-md-6', 'pe-0');
@@ -153,7 +161,6 @@ class ODWPI_IDE extends HTMLElement {
     // output 
     document.getElementById('odwpi-editor-output').classList.remove('col-sm-12', 'col-md-6', 'p-0');
 
-    this.OutputViewUpdated();
   }
 
   dockToRight(){
@@ -165,8 +172,6 @@ class ODWPI_IDE extends HTMLElement {
 
     // output 
     document.getElementById('odwpi-editor-output').classList.add('col-sm-12', 'col-md-6', 'p-0');
-
-    this.OutputViewUpdated();
 
   }
   
