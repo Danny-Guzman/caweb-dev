@@ -68,7 +68,7 @@
 		 Multiple valid text domains can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="ODWPI,odwpi"/>
+			<property name="text_domain" type="array" value="CAWeb Dev,caweb_dev"/>
 		</properties>
 	</rule>
 
@@ -111,7 +111,7 @@
 		 Multiple valid prefixes can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="odwpi_,wp_" />
+			<property name="prefixes" type="array" value="caweb_dev_,wp_" />
 		</properties>
 	</rule>
 

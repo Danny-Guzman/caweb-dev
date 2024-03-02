@@ -81,7 +81,7 @@ function playButton(view){
   var playButton = document.createElement('BUTTON');
 
   // play button
-  playButton.id = 'odwpi-editor-execute';
+  playButton.id = 'caweb-editor-execute';
   playButton.classList.add('bg-transparent', 'bi', 'bi-play-fill', 'text-success', 'fs-4', 'border-0', 'border-end', 'border-2', 'text-center', 'align-self-center');
   playButton.setAttribute('tabindex', 0);
   // add listeners
@@ -96,7 +96,7 @@ function testButton(view){
   var testButton = document.createElement('BUTTON');
 
   // test button
-  testButton.id = 'odwpi-editor-execute';
+  testButton.id = 'caweb-editor-execute';
   testButton.classList.add('bg-transparent', 'bi', 'bi-code-slash', 'text-danger', 'fs-4', 'border-0', 'text-center', 'align-self-center');
   testButton.setAttribute('tabindex', 0);
   // add listeners
@@ -111,7 +111,7 @@ function toolBarPanel(view){
   var toolbarDiv = document.createElement('DIV');
 
   // toolbar container
-  toolbarDiv.id = 'odwpi-editor-toolbar';
+  toolbarDiv.id = 'caweb-editor-toolbar';
   toolbarDiv.classList.add('d-flex');
 
   toolbarDiv.append(playButton(view));

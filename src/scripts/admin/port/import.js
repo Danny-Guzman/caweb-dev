@@ -2,14 +2,14 @@ import * as bootstrap from "bootstrap";
 
 jQuery(document).ready(function($) {
 
-    if( $('#odwpi-dev-modal').length ){
-        const portModal = new bootstrap.Modal(document.getElementById('odwpi-dev-modal'));
+    if( $('#caweb-dev-modal').length ){
+        const portModal = new bootstrap.Modal(document.getElementById('caweb-dev-modal'));
     }
 
     $('#import-file').on('click', (e) => {
-        let fd = new FormData($('#odwpi-dev-import')[0]);
+        let fd = new FormData($('#caweb-dev-import')[0]);
 
-        $.each($('#odwpi-dev-import #importFile')[0].files, (i, file) => {
+        $.each($('#caweb-dev-import #importFile')[0].files, (i, file) => {
             fd.append('file-' + i, file);
         })
 
@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
         // portModal.show();
 
         jQuery.post({
-			url: $('#odwpi-dev-import').attr('action'),
+			url: $('#caweb-dev-import').attr('action'),
 			type: 'POST',
 			data: fd,
 			processData: false,
@@ -25,13 +25,13 @@ jQuery(document).ready(function($) {
 			success: function( response ){
                 console.log(response)
                 // update modal body
-                $('#odwpi-dev-modal .modal-title').html('Done!');
+                $('#caweb-dev-modal .modal-title').html('Done!');
 
                 // update modal body
-                $('#odwpi-dev-modal .modal-body').html('<h5>Export completed successfully.</h5>');
+                $('#caweb-dev-modal .modal-body').html('<h5>Export completed successfully.</h5>');
 
                 // show the footer
-                $('#odwpi-dev-modal .modal-footer').removeClass('d-none');
+                $('#caweb-dev-modal .modal-footer').removeClass('d-none');
 			}
 		});
     })

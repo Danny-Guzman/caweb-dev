@@ -1,5 +1,5 @@
 {
-    "name": "odwpi/dev",
+    "name": "caweb/dev",
     "description": "Packages to help enforce WordPress Coding Standards",
     "require-dev": {
         "caweb/phpdoc": "dev-master",

@@ -3,13 +3,13 @@
  * WP Ajax
  *
  * @see https://codex.wordpress.org/AJAX_in_Plugins
- * @package ODWPI
+ * @package CAWeb Dev
  */
 
-add_action( 'wp_ajax_odwpi_dev_code', 'odwpi_dev_code' );
-add_action( 'wp_ajax_odwpi_dev_download_post_shortcode', 'odwpi_dev_download_post_shortcode' );
-add_action( 'wp_ajax_odwpi_dev_export', 'odwpi_dev_export' );
-add_action( 'wp_ajax_odwpi_dev_import', 'odwpi_dev_import' );
+add_action( 'wp_ajax_caweb_dev_code', 'caweb_dev_code' );
+add_action( 'wp_ajax_caweb_dev_download_post_shortcode', 'caweb_dev_download_post_shortcode' );
+//add_action( 'wp_ajax_caweb_dev_export', 'caweb_dev_export' );
+//add_action( 'wp_ajax_caweb_dev_import', 'caweb_dev_import' );
 
 /**
  * Print output of evaluated code
@@ -18,14 +18,14 @@ add_action( 'wp_ajax_odwpi_dev_import', 'odwpi_dev_import' );
  * 
  * @return void
  */
-function odwpi_dev_code() {
+function caweb_dev_code() {
 
-	if ( ! isset( $_POST['odwpi_dev_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['odwpi_dev_nonce'] ), 'odwpi_dev_nonce' ) ) {
+	if ( ! isset( $_POST['caweb_dev_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['caweb_dev_nonce'] ), 'caweb_dev_nonce' ) ) {
 		wp_die();
 	}
 
-	$code = isset( $_POST['odwpi_dev_coding_string'] ) ? wp_unslash( $_POST['odwpi_dev_coding_string'] ) : '';
-	$mode = isset( $_POST['odwpi_dev_coding_mode'] ) ? wp_unslash( $_POST['odwpi_dev_coding_mode'] ) : '';
+	$code = isset( $_POST['caweb_dev_coding_string'] ) ? wp_unslash( $_POST['caweb_dev_coding_string'] ) : '';
+	$mode = isset( $_POST['caweb_dev_coding_mode'] ) ? wp_unslash( $_POST['caweb_dev_coding_mode'] ) : '';
 
 	try {
 		if( 'php' === $mode ){
@@ -73,10 +73,10 @@ function odwpi_dev_code() {
  *
  * @return void
  */
-function odwpi_dev_download_post_shortcode() {
+function caweb_dev_download_post_shortcode() {
 	try {
-		$nonce    = wp_create_nonce( 'odwpi_dev_download_post_shortcode' );
-		$verified = wp_verify_nonce( sanitize_key( $nonce ), 'odwpi_dev_download_post_shortcode' );
+		$nonce    = wp_create_nonce( 'caweb_dev_download_post_shortcode' );
+		$verified = wp_verify_nonce( sanitize_key( $nonce ), 'caweb_dev_download_post_shortcode' );
 
 		$id = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : 0;
 		$post = get_post( $id );
@@ -101,10 +101,10 @@ function odwpi_dev_download_post_shortcode() {
 }
 
 
-function odwpi_dev_export(){
+function caweb_dev_export(){
 
 	
-	if ( ! isset( $_POST['odwpi_dev_export_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['odwpi_dev_export_nonce'] ), 'odwpi_dev_export_nonce' ) ) {
+	if ( ! isset( $_POST['caweb_dev_export_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['caweb_dev_export_nonce'] ), 'caweb_dev_export_nonce' ) ) {
 		wp_die();
 	}
 	
@@ -195,9 +195,9 @@ function odwpi_dev_export(){
 
 }
 
-function odwpi_dev_import(){
+function caweb_dev_import(){
 	
-	if ( ! isset( $_POST['odwpi_dev_import_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['odwpi_dev_import_nonce'] ), 'odwpi_dev_import_nonce' ) ) {
+	if ( ! isset( $_POST['caweb_dev_import_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['caweb_dev_import_nonce'] ), 'caweb_dev_import_nonce' ) ) {
 		wp_die();
 	}
 

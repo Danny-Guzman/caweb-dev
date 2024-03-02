@@ -2,8 +2,8 @@ import {EditorView, basicSetup } from "codemirror";
 
 import {preferredSetup, phpMsg} from './config';
 
-class ODWPI_IDE extends HTMLElement {
-  key = 'odwpi-editor';
+class CAWEB_IDE extends HTMLElement {
+  key = 'caweb-editor';
 
   constructor(){
     super();
@@ -29,7 +29,7 @@ class ODWPI_IDE extends HTMLElement {
     this.showOutput();
 
     // adding width auto to the lint gutter, makes it so the gutter is only present if errors are showing.
-    document.querySelector('odwpi-ide .cm-gutter-lint').classList.add('w-auto');
+    document.querySelector('caweb-ide .cm-gutter-lint').classList.add('w-auto');
 
   }
 
@@ -84,12 +84,12 @@ class ODWPI_IDE extends HTMLElement {
 
     // add event listeners
     topScrollDiv.addEventListener('scroll', function(e){
-      document.getElementById('odwpi-editor-output-view').scrollLeft = e.target.scrollLeft;
+      document.getElementById('caweb-editor-output-view').scrollLeft = e.target.scrollLeft;
     })
 
     outputView.addEventListener('DOMSubtreeModified', this.OutputViewUpdated )
     outputView.addEventListener('scroll', function(e){
-      document.getElementById('odwpi-editor-output-topscroll').scrollLeft = e.target.scrollLeft;
+      document.getElementById('caweb-editor-output-topscroll').scrollLeft = e.target.scrollLeft;
     });
 
   }
@@ -156,10 +156,10 @@ class ODWPI_IDE extends HTMLElement {
     this.classList.remove('row');
 
     // editor
-    document.getElementById('odwpi-editor-container').classList.remove('col-sm-12', 'col-md-6', 'pe-0');
+    document.getElementById('caweb-editor-container').classList.remove('col-sm-12', 'col-md-6', 'pe-0');
 
     // output 
-    document.getElementById('odwpi-editor-output').classList.remove('col-sm-12', 'col-md-6', 'p-0');
+    document.getElementById('caweb-editor-output').classList.remove('col-sm-12', 'col-md-6', 'p-0');
 
   }
 
@@ -168,17 +168,17 @@ class ODWPI_IDE extends HTMLElement {
     this.classList.add('row');
 
     // editor
-    document.getElementById('odwpi-editor-container').classList.add('col-sm-12', 'col-md-6', 'pe-0');
+    document.getElementById('caweb-editor-container').classList.add('col-sm-12', 'col-md-6', 'pe-0');
 
     // output 
-    document.getElementById('odwpi-editor-output').classList.add('col-sm-12', 'col-md-6', 'p-0');
+    document.getElementById('caweb-editor-output').classList.add('col-sm-12', 'col-md-6', 'p-0');
 
   }
   
   OutputViewUpdated(){
-    let outputView = document.getElementById('odwpi-editor-output-view')
+    let outputView = document.getElementById('caweb-editor-output-view')
 
-    let topScrollDiv = document.getElementById('odwpi-editor-output-topscroll');
+    let topScrollDiv = document.getElementById('caweb-editor-output-topscroll');
     let topScroll = topScrollDiv.firstChild;
 
     let hasScrollbars = outputView.scrollWidth > outputView.clientWidth;
@@ -194,4 +194,4 @@ class ODWPI_IDE extends HTMLElement {
   }
 }
 
-customElements.define('odwpi-ide', ODWPI_IDE);
+customElements.define('caweb-ide', CAWEB_IDE);

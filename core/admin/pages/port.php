@@ -2,23 +2,23 @@
 /**
  * API's Page
  *
- * @package ODWPI-Dev
+ * @package CAWeb Dev
  */
 
 ?>
 <h3>Import</h3>
 <div class="mb-3 d-flex">
 	<div class="col-sm-10 col-md-6">
-		<form id="odwpi-dev-import" enctype="multipart/form-data" method="post" action="<?php print esc_url( admin_url( 'admin-ajax.php?action=odwpi_dev_import' ) ); ?>">
-			<?php wp_nonce_field( 'odwpi_dev_import_nonce', 'odwpi_dev_import_nonce' ); ?>
+		<form id="caweb-dev-import" enctype="multipart/form-data" method="post" action="<?php print esc_url( admin_url( 'admin-ajax.php?action=caweb_dev_import' ) ); ?>">
+			<?php wp_nonce_field( 'caweb_dev_import_nonce', 'caweb_dev_import_nonce' ); ?>
 			<input class="form-control form-control-sm py-2 px-2" type="file" id="importFile">
 		</form>
 	</div>
  	<button class="btn btn-outline-secondary ms-2" id="import-file">Import</button>
 </div>
 <h3>Export</h3>
-<form id="odwpi-dev-export" method="post" action="<?php print esc_url( admin_url( 'admin-ajax.php?action=odwpi_dev_export' ) ); ?>">
-	<?php wp_nonce_field( 'odwpi_dev_export_nonce', 'odwpi_dev_export_nonce' ); ?>
+<form id="caweb-dev-export" method="post" action="<?php print esc_url( admin_url( 'admin-ajax.php?action=caweb_dev_export' ) ); ?>">
+	<?php wp_nonce_field( 'caweb_dev_export_nonce', 'caweb_dev_export_nonce' ); ?>
 	<h4>What would you like to export</h4>
 	<ul id="export-options" class="list-group list-group-flush">
 		<li class="list-group-item">
@@ -48,10 +48,10 @@
 		</li>
 	</ul>
 
-	<button id="odwpi-dev-export-submit" class="btn btn-primary">Export</button>
+	<button id="caweb-dev-export-submit" class="btn btn-primary">Export</button>
 </form>
 
-<div id="odwpi-dev-modal" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+<div id="caweb-dev-modal" class="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
     	<div class="modal-header">
