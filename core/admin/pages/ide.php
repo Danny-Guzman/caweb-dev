@@ -2,12 +2,12 @@
 /**
  * IDE Page
  *
- * @package ODWPI-Dev
+ * @package CAWeb Dev
  */
 
-wp_nonce_field( 'odwpi_dev_nonce', 'odwpi_dev_nonce' );
+wp_nonce_field( 'caweb_dev_nonce', 'caweb_dev_nonce' );
 
 ?>
 
 <!-- Editor -->
-<odwpi-ide></odwpi-ide>
+<caweb-ide></caweb-ide>

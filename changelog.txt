@@ -1,0 +1,3 @@
+CAWebPublishing Development Toolbox v1.0.0
+- Added Codemirror IDE
+- Extending WordPress Rest API

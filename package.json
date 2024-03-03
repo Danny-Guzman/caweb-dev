@@ -1,7 +1,7 @@
 {
-  "name": "odwpi",
-  "description": "ODWPI Dev Plugin Packages",
-  "version": "2.0.1",
+  "name": "caweb-dev",
+  "description": "CAWeb Dev Plugin Packages",
+  "version": "2.0.2",
   "author": "Danny Guzman (https://github.com/Danny-Guzman/)",
   "repository": {
     "type": "git",
@@ -9,25 +9,16 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "webpack-cli build",
-    "watch": "webpack-cli watch"
+    "caweb": "caweb",
+    "build": "caweb build"
   },
   "devDependencies": {
+    "@caweb/cli": "file:../../../../cli/caweb-cli-1.3.1.tgz",
     "@codemirror/lang-php": "^6.0.1",
-    "@codemirror/lang-sql": "^6.5.0",
-    "@codemirror/language": "^6.7.0",
-    "autoprefixer": "^10.4.14",
-    "bootstrap": "^5.2.3",
-    "bootstrap-icons": "^1.10.5",
-    "codemirror": "^6.0.1",
-    "css-loader": "^6.7.4",
-    "file-loader": "^6.2.0",
-    "mini-css-extract-plugin": "^2.7.6",
-    "postcss-loader": "^7.3.0",
-    "sass": "^1.62.1",
-    "sass-loader": "^13.3.0",
-    "style-loader": "^3.3.3",
-    "webpack": "^5.84.1",
-    "webpack-cli": "^5.1.3"
+    "@codemirror/lang-sql": "^6.5.5",
+    "@codemirror/language": "^6.10.1",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "codemirror": "^6.0.1"
   }
 }

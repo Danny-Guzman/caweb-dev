@@ -1,5 +1,5 @@
 /*!
- * Custom Bootstrap v5.2.3 (https://getbootstrap.com/)
+ * Custom Bootstrap v5.3.3 (https://getbootstrap.com/)
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * @see https://github.com/twbs/bootstrap/blob/main/site/content/docs/5.3/migration.md
  * @see https://github.com/twbs/bootstrap/blob/main/scss/bootstrap.scss
@@ -45,13 +45,10 @@
 @import "bootstrap/scss/list-group";
 @import "bootstrap/scss/modal";
 @import "bootstrap/scss/navbar";
-
-/*
 @import "bootstrap/scss/tables";
 @import "bootstrap/scss/tooltip";
-*/
 
- // Helpers
+// Helpers
 @import "bootstrap/scss/helpers";
 
 // Utilities

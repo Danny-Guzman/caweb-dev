@@ -1,8 +1,8 @@
 <?php
 /**
- * ODWPI Helper Functions
+ * CAWeb Dev Helper Functions
  *
- * @package ODWPI
+ * @package CAWeb Dev
  */
 
 /**
@@ -13,16 +13,16 @@
  *
  * @return string
  */
-function odwpi_dev_get_min_file( $f, $ext = 'css' ) {
+function caweb_dev_get_min_file( $f, $ext = 'css' ) {
 	// if a minified version exists.
-	if ( false && file_exists( ODWPI_DEV_PLUGIN_DIR . str_replace( ".$ext", ".min.$ext", $f ) ) ) {
-		return ODWPI_DEV_PLUGIN_URL . str_replace( ".$ext", ".min.$ext", $f );
+	if ( false && file_exists( CAWEB_DEV_PLUGIN_DIR . str_replace( ".$ext", ".min.$ext", $f ) ) ) {
+		return CAWEB_DEV_PLUGIN_URL . str_replace( ".$ext", ".min.$ext", $f );
 	} else {
-		return ODWPI_DEV_PLUGIN_URL . $f;
+		return CAWEB_DEV_PLUGIN_URL . $f;
 	}
 }
 
-function odwpi_dev_tools(){
+function caweb_dev_tools(){
 	$tools = array(
 		'codemirror' => array(
 			'label' => 'CodeMirror',
@@ -59,7 +59,7 @@ function odwpi_dev_tools(){
  * @return array
  */
 /*
-function odwpi_dev_get_database_tables() {
+function caweb_dev_get_database_tables() {
 	global $wpdb;
 	$sql     = '';
 	$results = $wpdb->get_results( 'show tables' );
