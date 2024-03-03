@@ -11,22 +11,30 @@ This plugin extends the [WordPress Rest API](https://developer.wordpress.org/res
 - Requires PHP 8.1 or greater
 
 ## API Endpoints
+
 `/wp-json/caweb/v1/sync` - Allows for updating taxonomy ID's.
   
+Request Parameters:  
+- id - Current ID to be updated.
+- newId - New ID to replace current.
+- tax - Taxonomy to be upated. Available taxonomies include pages, posts, media, menus.
+- locations - Only if tax is menus, allows assigning a menu to a registered location.  
+
 Requst Example:  
+<pre>
 {  
-&nbsp;&nbsp;&nbsp;&nbsp;method: 'POST',  
-&nbsp;&nbsp;&nbsp;&nbsp;url: 'http://example.com/wp-json/caweb/v1/sync',  
-&nbsp;&nbsp;&nbsp;&nbsp;headers: {  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Authorization': [Authentication Method](https://developer.wordpress.org/rest-api/using-the-rest-api/authentication/),  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'content-type': 'multipart/form-data',  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'accept': '*/*',  
-&nbsp;&nbsp;&nbsp;&nbsp;},  
-&nbsp;&nbsp;&nbsp;&nbsp;data: {  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id: 1,    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newId: 10,    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tax: 'pages', // Allowed taxonomies include pages, posts, media, menus   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;locations: ['header-menu'], // This parameter is only used for menus and allows assigning a menu to a registered location.    
-&nbsp;&nbsp;&nbsp;&nbsp;},  
+    method: 'POST',  
+    url: 'http://example.com/wp-json/caweb/v1/sync',  
+    headers: {  
+        'Authorization': <a href="https://developer.wordpress.org/rest-api/using-the-rest-api/authentication/">Authentication Method</a>,  
+        'content-type': 'multipart/form-data',  
+        'accept': '*/*',  
+    },  
+    data: {  
+        id: 1,    
+        newId: 10,    
+        tax: 'pages', // Allowed taxonomies include 
+        locations: ['header-menu'], // This parameter is only used for menus and     
+    },  
 }
-                
+</pre>                
