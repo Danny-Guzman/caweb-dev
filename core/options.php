@@ -45,7 +45,7 @@ function caweb_dev_main_page() {
 			<?php
 				if ( ! in_array($page, array('ide', 'port'), true ) ) {
 			?>
-				<h3>CAWebPublishing Development</h3>
+				<h3>CAWebPublishing Development Toolbox</h3>
 				<p class="fs-6">This plugin was created to help facilitate running code in realtime in a WordPress Instance.</p>
 
 				<h5>Current Features:</h5>

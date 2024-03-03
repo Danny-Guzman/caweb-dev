@@ -1,11 +1,13 @@
 <?php
 /**
- * Plugin Name: CAWeb Development Tool
+ * Plugin Name: CAWebPublishing Development Toolbox
  * Plugin URI: "https://github.com/CAWebPublishing/caweb-dev/"
  * Description: Code in realtime and query against the database using an IDE.
  * Author: Jesus D. Guzman
- * Version: 2.0.2
- *
+ * Version: 1.0.0
+ * Requires at least: 6.2
+ * Requires PHP: 8.0
+ * 
  * @package CAWeb Dev
  */
 

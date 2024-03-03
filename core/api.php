@@ -43,7 +43,7 @@ function caweb_dev_rest_post_dispatch( $result, $server, $request ){
  * @return void
  */
 function caweb_dev_rest_api_init() {
-    register_rest_route( 'caweb-dev/v1', '/sync/', array(
+    register_rest_route( 'caweb/v1', '/sync/', array(
         'methods' => 'POST',
         'callback' => 'caweb_dev_sync',
         'permission_callback' => function(){
