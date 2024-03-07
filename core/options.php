@@ -18,7 +18,7 @@ add_action( 'network_admin_menu', 'caweb_dev_plugin_menu' );
 function caweb_dev_plugin_menu() {
 	$cap = is_multisite() ? 'manage_network_options' : 'manage_options';
 
-	add_menu_page( 'CAWeb Dev', 'CAWeb Dev', $cap, 'caweb-dev', 'caweb_dev_main_page', '' );
+	add_menu_page( 'CAWeb Dev', 'CAWeb Dev', $cap, 'caweb-dev', 'caweb_dev_main_page', CAWEB_DEV_PLUGIN_URL . 'logo.png' );
 
 	add_submenu_page( 'caweb-dev', 'IDE', 'IDE', $cap, 'caweb-dev-ide', 'caweb_dev_main_page' );
 	//add_submenu_page( 'caweb-dev', 'Port', 'Port', $cap, 'caweb-dev-port', 'caweb_dev_main_page' );
