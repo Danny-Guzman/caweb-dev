@@ -74,6 +74,11 @@ function caweb_dev_rest_api_init() {
             'locations' => array( 
                 'default' => array()
             ),
+            'guid' => array(
+                'validate_callback' => function($param) {
+                    return is_string( $param );
+                }
+            )
         )
     ) );
 }
@@ -93,20 +98,40 @@ function caweb_dev_sync( $request ) {
     $newId = $request->get_param( 'newId' );
     $tax = $request->get_param( 'tax' );
     $locations = $request->get_param( 'locations' );
+    $guid = $request->get_param( 'guid' );
+    $newGuid = $request->get_param( 'newGuid' );
+    $mediaDetails = $request->get_param( 'media_details' );
 
+    
     switch( $tax ) {
         // pages, posts, media are all stored in the same tables.
         case 'pages':
         case 'posts':
         case 'media':
         case 'menu-items':
+            $post_cols = array(
+                'ID' => $newId
+            );
 
+            /**
+             * WordPress appends -scaled to big images and we want to keep the original guid.
+             * So uploading an image which has already been -scaled will create a new guid of -scaled-1
+             * To keep the original guid we update the guid column for media items.
+             * 
+             * @link https://wordpress.org/support/topic/media-images-renamed-to-xyz-scaled-jpg/
+             * @link https://make.wordpress.org/core/2019/10/09/introducing-handling-of-big-images-in-wordpress-5-3/
+             * @since WordPress 5.3
+             */
+            if( 'media' === $tax && ! empty( $newGuid ) ){
+                $post_cols['guid'] = $newGuid;
+            }
+            
             // update posts table.
             $wpdb->update(
                 1 === $site_id ? 'wp_posts' : "wp_${site_id}_posts",
-                array( 'ID' => $newId ),
+                $post_cols,
                 array( 'ID' => $oldId ),
-                array( '%d' )
+                array( '%d', '%s' )
             );
 
             // update post_meta table.
@@ -114,9 +139,76 @@ function caweb_dev_sync( $request ) {
                 1 === $site_id ? 'wp_postmeta' : "wp_${site_id}_postmeta",
                 array( 'post_id' => $newId ),
                 array( 'post_id' => $oldId ),
-                array( '%d' )
+                array( '%d', '%s' )
             );
 
+            // if the tax is media.
+            if( 'media' === $tax ){
+                // update _wp_attached_file meta key.
+                $wpdb->update(
+                    1 === $site_id ? 'wp_postmeta' : "wp_${site_id}_postmeta",
+                    array( 'meta_value' => preg_replace('/.*\/uploads\//', '', $newGuid) ),
+                    array( 'post_id' => $newId, 'meta_key' => '_wp_attached_file' ),
+                    array( '%s' )
+                );
+
+                // if the file name has changed we need to rename the files accordingly.
+                if( $guid !== $newGuid && ! empty( $mediaDetails ) ){
+                    $upload_path = wp_upload_dir()['basedir'];
+                    $upload_url = wp_upload_dir()['baseurl'];
+
+                    // get the old file name without extension.
+                    $old_file_name = explode('/', $mediaDetails['file'] );
+                    $old_file_name = array_pop($old_file_name);
+                    $old_file_name = substr($old_file_name, 0, strrpos($old_file_name,'.'));
+
+                    // get the new file name and extension.
+                    $correct_file_name = explode('/', $newGuid );
+                    $correct_file_name = array_pop($correct_file_name);
+                    $ext = substr($correct_file_name, strrpos($correct_file_name, '.'));
+                    $correct_file_name = substr($correct_file_name, 0, strrpos($correct_file_name,'.'));
+                    
+                    // iterate through media detail sizes.
+                    foreach( $mediaDetails['sizes'] as $s => $size ){
+                        $size_file_path = preg_replace('/.*\/uploads\//', '', $size['source_url']);
+                        
+                        // if the file exists.
+                        if( file_exists("{$upload_path}/{$size_file_path}") ){
+                            $new_size_file_path = str_replace(
+                                $old_file_name, 
+                                $correct_file_name ,
+                                "{$upload_path}/{$size_file_path}" 
+                            );
+
+                            $new_file_name = explode('/', $new_size_file_path);
+                            $new_file_name = array_pop($new_file_name);
+
+                            // rename the file name.
+                            rename(
+                                "{$upload_path}/{$size_file_path}", 
+                                $new_size_file_path
+                            );
+
+                            // update media detail.
+                            $mediaDetails['sizes'][$s]['file'] = "{$new_file_name}";
+                            $mediaDetails['sizes'][$s]['source_url'] = "{$upload_url}/{$new_file_name}";
+
+                        }
+                    }
+
+                    $mediaDetails['file'] = str_replace($old_file_name, $correct_file_name, $mediaDetails['file'] );
+
+                    // update _wp_attachment_metadata meta key.
+                    $wpdb->update(
+                        1 === $site_id ? 'wp_postmeta' : "wp_${site_id}_postmeta",
+                        array( 'meta_value' => maybe_serialize( $mediaDetails ) ),
+                        array( 'post_id' => $newId, 'meta_key' => '_wp_attachment_metadata' ),
+                        array( '%s' )
+                    );
+                }
+            }
+
+            // if the tax is menu-items we need to update the wp_term_relationships table.
             if( 'menu-items' === $tax ){
                 // update wp_term_relationships table.
                 $wpdb->update(
