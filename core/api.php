@@ -1,6 +1,8 @@
 <?php
 /**
  * CAWeb Dev REST API
+ * 
+ * @package CAWeb Dev
  */
 
 add_action( 'rest_api_init', 'caweb_dev_rest_api_init' );
@@ -142,69 +144,85 @@ function caweb_dev_sync( $request ) {
                 array( '%d', '%s' )
             );
 
-            // if the tax is media.
-            if( 'media' === $tax ){
+            /**
+             * If the tax is media and the guid is different than the new guid and media details are not empty.
+             */
+            if( 'media' === $tax && $guid !== $newGuid && ! empty( $mediaDetails ) ){
+                $upload_path = wp_upload_dir()['basedir'];
+                $upload_url = wp_upload_dir()['baseurl'];
+                
+                // get just the file without the uploads path.
+                $file = preg_replace('/.*\/uploads\//', '', $newGuid);
+                $old_file = preg_replace('/.*\/uploads\//', '', $guid);
+
+                $correct_date = substr($file, 0, strrpos($file, '/') + 1);
+                $old_date = substr($old_file, 0, strrpos($old_file, '/') + 1);
+
                 // update _wp_attached_file meta key.
                 $wpdb->update(
                     1 === $site_id ? 'wp_postmeta' : "wp_${site_id}_postmeta",
-                    array( 'meta_value' => preg_replace('/.*\/uploads\//', '', $newGuid) ),
+                    array( 'meta_value' => $file ),
                     array( 'post_id' => $newId, 'meta_key' => '_wp_attached_file' ),
                     array( '%s' )
                 );
 
-                // if the file name has changed we need to rename the files accordingly.
-                if( $guid !== $newGuid && ! empty( $mediaDetails ) ){
-                    $upload_path = wp_upload_dir()['basedir'];
-                    $upload_url = wp_upload_dir()['baseurl'];
+                $mediaDetails['file'] = $file;
 
-                    // get the old file name without extension.
-                    $old_file_name = explode('/', $mediaDetails['file'] );
-                    $old_file_name = array_pop($old_file_name);
-                    $old_file_name = substr($old_file_name, 0, strrpos($old_file_name,'.'));
+                // move original file to the correct date folder.
+                if( file_exists("{$upload_path}/{$old_file}") ){
+                    $new_file = str_replace($old_date, $correct_date, "{$upload_path}/{$old_file}");
+                    if( ! file_exists( dirname( $new_file ) ) ){
+                        mkdir( dirname( $new_file ), 0755, true);
+                    }
+                    rename("{$upload_path}/{$old_file}", $new_file);
+                }
 
-                    // get the new file name and extension.
-                    $correct_file_name = explode('/', $newGuid );
-                    $correct_file_name = array_pop($correct_file_name);
-                    $ext = substr($correct_file_name, strrpos($correct_file_name, '.'));
-                    $correct_file_name = substr($correct_file_name, 0, strrpos($correct_file_name,'.'));
-                    
-                    // iterate through media detail sizes.
+                // iterate through media detail sizes.
+                if( isset( $mediaDetails['sizes'] ) && ! empty( $mediaDetails['sizes'] ) ){
                     foreach( $mediaDetails['sizes'] as $s => $size ){
                         $size_file_path = preg_replace('/.*\/uploads\//', '', $size['source_url']);
-                        
+                        $old_date = substr($size_file_path, 0, strrpos($size_file_path, '/') + 1);
+    
                         // if the file exists.
                         if( file_exists("{$upload_path}/{$size_file_path}") ){
+                            $source_url = $mediaDetails['sizes'][$s]['source_url'];
+    
+                            // replace the old date with the correct date.
                             $new_size_file_path = str_replace(
-                                $old_file_name, 
-                                $correct_file_name ,
+                                $old_date, 
+                                $correct_date ,
                                 "{$upload_path}/{$size_file_path}" 
                             );
-
-                            $new_file_name = explode('/', $new_size_file_path);
-                            $new_file_name = array_pop($new_file_name);
-
+    
                             // rename the file name.
                             rename(
                                 "{$upload_path}/{$size_file_path}", 
                                 $new_size_file_path
                             );
-
+    
                             // update media detail.
-                            $mediaDetails['sizes'][$s]['file'] = "{$new_file_name}";
-                            $mediaDetails['sizes'][$s]['source_url'] = "{$upload_url}/{$new_file_name}";
-
+                            $mediaDetails['sizes'][$s]['source_url'] = str_replace($old_date, $correct_date, $source_url);
+    
                         }
                     }
-
-                    $mediaDetails['file'] = str_replace($old_file_name, $correct_file_name, $mediaDetails['file'] );
-
-                    // update _wp_attachment_metadata meta key.
-                    $wpdb->update(
+                }
+                
+                // update _wp_attachment_metadata meta key.
+                $wpdb->update(
                         1 === $site_id ? 'wp_postmeta' : "wp_${site_id}_postmeta",
                         array( 'meta_value' => maybe_serialize( $mediaDetails ) ),
                         array( 'post_id' => $newId, 'meta_key' => '_wp_attachment_metadata' ),
                         array( '%s' )
                     );
+
+                // if the old date month path is empty remove the folder.
+                if( 2 === count( scandir("{$upload_path}/{$old_date}") )){
+                    rmdir( "{$upload_path}/{$old_date}" );
+
+                    // if the old date year path is empty remove the folder.
+                    if( 2 === count( scandir( dirname( "{$upload_path}/{$old_date}" ) ) ) ){
+                        rmdir( dirname( "{$upload_path}/{$old_date}" ) );
+                    }
                 }
             }
 
