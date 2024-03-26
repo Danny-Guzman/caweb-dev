@@ -32,22 +32,10 @@ function caweb_dev_tools(){
 		),
 		'bootstrap' => array(
 			'label' => 'Bootstrap',
-			'version' => '5.2.3',
-			'url' => 'https://getbootstrap.com/docs/5.2/getting-started/introduction/',
+			'version' => '5.3.3',
+			'url' => 'https://getbootstrap.com/docs/5.3/getting-started/introduction/',
 			'icon' => 'bi bi-bootstrap-fill'
-		),
-		'webpack' => array(
-			'label' => 'webpack',
-			'version' => '5.82.1',
-			'url' => 'https://webpack.js.org/',
-			'logo' => 'https://webpack.js.org/icon_192x192.png'
-		),
-		'npm' => array(
-			'label' => 'npm',
-			'version' => '9.6.4',
-			'url' => 'https://docs.npmjs.com/',
-			'logo' => 'https://docs.npmjs.com/favicon-32x32.png'
-		),
+		)
 	);
 
 	return $tools;
