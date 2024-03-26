@@ -1,6 +1,8 @@
 <?php
 /**
  * CAWeb Dev REST API
+ * 
+ * @package CAWeb Dev
  */
 
 add_action( 'rest_api_init', 'caweb_dev_rest_api_init' );
@@ -176,30 +178,32 @@ function caweb_dev_sync( $request ) {
                 }
 
                 // iterate through media detail sizes.
-                foreach( $mediaDetails['sizes'] as $s => $size ){
-                    $size_file_path = preg_replace('/.*\/uploads\//', '', $size['source_url']);
-                    $old_date = substr($size_file_path, 0, strrpos($size_file_path, '/') + 1);
-
-                    // if the file exists.
-                    if( file_exists("{$upload_path}/{$size_file_path}") ){
-                        $source_url = $mediaDetails['sizes'][$s]['source_url'];
-
-                        // replace the old date with the correct date.
-                        $new_size_file_path = str_replace(
-                            $old_date, 
-                            $correct_date ,
-                            "{$upload_path}/{$size_file_path}" 
-                        );
-
-                        // rename the file name.
-                        rename(
-                            "{$upload_path}/{$size_file_path}", 
-                            $new_size_file_path
-                        );
-
-                        // update media detail.
-                        $mediaDetails['sizes'][$s]['source_url'] = str_replace($old_date, $correct_date, $source_url);
-
+                if( isset( $mediaDetails['sizes'] ) && ! empty( $mediaDetails['sizes'] ) ){
+                    foreach( $mediaDetails['sizes'] as $s => $size ){
+                        $size_file_path = preg_replace('/.*\/uploads\//', '', $size['source_url']);
+                        $old_date = substr($size_file_path, 0, strrpos($size_file_path, '/') + 1);
+    
+                        // if the file exists.
+                        if( file_exists("{$upload_path}/{$size_file_path}") ){
+                            $source_url = $mediaDetails['sizes'][$s]['source_url'];
+    
+                            // replace the old date with the correct date.
+                            $new_size_file_path = str_replace(
+                                $old_date, 
+                                $correct_date ,
+                                "{$upload_path}/{$size_file_path}" 
+                            );
+    
+                            // rename the file name.
+                            rename(
+                                "{$upload_path}/{$size_file_path}", 
+                                $new_size_file_path
+                            );
+    
+                            // update media detail.
+                            $mediaDetails['sizes'][$s]['source_url'] = str_replace($old_date, $correct_date, $source_url);
+    
+                        }
                     }
                 }
                 
