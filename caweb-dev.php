@@ -6,7 +6,7 @@
  * Author: Jesus D. Guzman
  * Version: 1.0.0
  * Requires at least: 6.2
- * Requires PHP: 8.0
+ * Requires PHP: 8.2
  * 
  * @package CAWeb Dev
  */

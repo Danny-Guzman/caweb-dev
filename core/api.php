@@ -130,7 +130,7 @@ function caweb_dev_sync( $request ) {
             
             // update posts table.
             $wpdb->update(
-                1 === $site_id ? 'wp_posts' : "wp_${site_id}_posts",
+                1 === $site_id ? 'wp_posts' : "wp_{$site_id}_posts",
                 $post_cols,
                 array( 'ID' => $oldId ),
                 array( '%d', '%s' )
@@ -138,7 +138,7 @@ function caweb_dev_sync( $request ) {
 
             // update post_meta table.
             $wpdb->update(
-                1 === $site_id ? 'wp_postmeta' : "wp_${site_id}_postmeta",
+                1 === $site_id ? 'wp_postmeta' : "wp_{$site_id}_postmeta",
                 array( 'post_id' => $newId ),
                 array( 'post_id' => $oldId ),
                 array( '%d', '%s' )
@@ -160,7 +160,7 @@ function caweb_dev_sync( $request ) {
 
                 // update _wp_attached_file meta key.
                 $wpdb->update(
-                    1 === $site_id ? 'wp_postmeta' : "wp_${site_id}_postmeta",
+                    1 === $site_id ? 'wp_postmeta' : "wp_{$site_id}_postmeta",
                     array( 'meta_value' => $file ),
                     array( 'post_id' => $newId, 'meta_key' => '_wp_attached_file' ),
                     array( '%s' )
@@ -209,7 +209,7 @@ function caweb_dev_sync( $request ) {
                 
                 // update _wp_attachment_metadata meta key.
                 $wpdb->update(
-                        1 === $site_id ? 'wp_postmeta' : "wp_${site_id}_postmeta",
+                        1 === $site_id ? 'wp_postmeta' : "wp_{$site_id}_postmeta",
                         array( 'meta_value' => maybe_serialize( $mediaDetails ) ),
                         array( 'post_id' => $newId, 'meta_key' => '_wp_attachment_metadata' ),
                         array( '%s' )
@@ -230,7 +230,7 @@ function caweb_dev_sync( $request ) {
             if( 'menu-items' === $tax ){
                 // update wp_term_relationships table.
                 $wpdb->update(
-                    1 === $site_id ? 'wp_term_relationships' : "wp_${site_id}_term_relationships",
+                    1 === $site_id ? 'wp_term_relationships' : "wp_{$site_id}_term_relationships",
                     array( 'object_id' => $newId ),
                     array( 'object_id' => $oldId ),
                     array( '%d' )
@@ -241,14 +241,14 @@ function caweb_dev_sync( $request ) {
         case 'menus':
             // update terms table.
             $wpdb->update(
-                1 === $site_id ? 'wp_terms' : "wp_${site_id}_terms",
+                1 === $site_id ? 'wp_terms' : "wp_{$site_id}_terms",
                 array( 'term_id' => $newId ),
                 array( 'term_id' => $oldId ),
                 array( '%d' )
             );
             // update wp_term_taxonomy table.
             $wpdb->update(
-                1 === $site_id ? 'wp_term_taxonomy' : "wp_${site_id}_term_taxonomy",
+                1 === $site_id ? 'wp_term_taxonomy' : "wp_{$site_id}_term_taxonomy",
                 array( 
                     'term_taxonomy_id' => $newId,
                     'term_id' => $newId,

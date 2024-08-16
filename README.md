@@ -8,7 +8,7 @@ This plugin extends the [WordPress Rest API](https://developer.wordpress.org/res
 
 ## Dependencies
 - Requires WordPress 6.4 or greater.
-- Requires PHP 8.1 or greater
+- Requires PHP 8.2 or greater
 
 ## API Endpoints
 

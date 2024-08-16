@@ -1,3 +1,7 @@
-CAWebPublishing Development Toolbox v1.0.0
+v1.0.1
+- Resolved PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead
+- Updated npm packages
+
+v1.0.0
 - Added Codemirror IDE
 - Extending WordPress Rest API
