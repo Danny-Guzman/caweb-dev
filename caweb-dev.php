@@ -4,7 +4,7 @@
  * Plugin URI: "https://github.com/CAWebPublishing/caweb-dev/"
  * Description: Code in realtime and query against the database using an IDE.
  * Author: Jesus D. Guzman
- * Version: 1.0.0
+ * Version: 1.1.1
  * Requires at least: 6.2
  * Requires PHP: 8.2
  * 
