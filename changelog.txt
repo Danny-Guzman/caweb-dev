@@ -1,3 +1,9 @@
+v1.1.1
+- Fixed issue with Media items not syncing properly due to -scaled-1 being appended by WordPress
+
+v1.1.0
+- WordPress RestAPI Endpoints to allow for syncing with CAWebPublishin CLI Tool has been introduced
+
 v1.0.1
 - Resolved PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead
 - Updated npm packages

@@ -118,7 +118,7 @@ function caweb_dev_sync( $request ) {
             /**
              * WordPress appends -scaled to big images and we want to keep the original guid.
              * So uploading an image which has already been -scaled will create a new guid of -scaled-1
-             * To keep the original guid we update the guid column for media items.
+             * To keep the original guid we update the guid column for media items and rename files accordingly.
              * 
              * @link https://wordpress.org/support/topic/media-images-renamed-to-xyz-scaled-jpg/
              * @link https://make.wordpress.org/core/2019/10/09/introducing-handling-of-big-images-in-wordpress-5-3/
@@ -150,11 +150,11 @@ function caweb_dev_sync( $request ) {
             if( 'media' === $tax && $guid !== $newGuid && ! empty( $mediaDetails ) ){
                 $upload_path = wp_upload_dir()['basedir'];
                 $upload_url = wp_upload_dir()['baseurl'];
-                
+            
                 // get just the file without the uploads path.
                 $file = preg_replace('/.*\/uploads\//', '', $newGuid);
                 $old_file = preg_replace('/.*\/uploads\//', '', $guid);
-
+               
                 $correct_date = substr($file, 0, strrpos($file, '/') + 1);
                 $old_date = substr($old_file, 0, strrpos($old_file, '/') + 1);
 
@@ -170,38 +170,49 @@ function caweb_dev_sync( $request ) {
 
                 // move original file to the correct date folder.
                 if( file_exists("{$upload_path}/{$old_file}") ){
-                    $new_file = str_replace($old_date, $correct_date, "{$upload_path}/{$old_file}");
-                    if( ! file_exists( dirname( $new_file ) ) ){
-                        mkdir( dirname( $new_file ), 0755, true);
+                    // create directory path for new file if it doesnt exist.
+                    if( ! file_exists( dirname( "{$upload_path}/{$file}" ) ) ){
+                        mkdir( dirname( "{$upload_path}/{$file}" ), 0755, true);
                     }
-                    rename("{$upload_path}/{$old_file}", $new_file);
+                    rename("{$upload_path}/{$old_file}", "{$upload_path}/{$file}");
                 }
 
                 // iterate through media detail sizes.
                 if( isset( $mediaDetails['sizes'] ) && ! empty( $mediaDetails['sizes'] ) ){
                     foreach( $mediaDetails['sizes'] as $s => $size ){
-                        $size_file_path = preg_replace('/.*\/uploads\//', '', $size['source_url']);
-                        $old_date = substr($size_file_path, 0, strrpos($size_file_path, '/') + 1);
-    
+                        // get just the file without the uploads path.
+                        $src_file_path = preg_replace('/.*\/uploads\//', '', $size['source_url']);
+
                         // if the file exists.
-                        if( file_exists("{$upload_path}/{$size_file_path}") ){
-                            $source_url = $mediaDetails['sizes'][$s]['source_url'];
-    
+                        if( file_exists("{$upload_path}/{$src_file_path}") ){
+                            $old_fn = pathinfo($old_file, PATHINFO_FILENAME);
+                            $new_fn = pathinfo($file, PATHINFO_FILENAME);
+
+                            // correct -scaled-1 issue mentioned above.
                             // replace the old date with the correct date.
-                            $new_size_file_path = str_replace(
-                                $old_date, 
-                                $correct_date ,
-                                "{$upload_path}/{$size_file_path}" 
+                            $new_src_file_path = str_replace(
+                                array($old_fn, $old_date),
+                                array($new_fn, $correct_date),
+                                "{$upload_path}/{$src_file_path}"
                             );
-    
+
                             // rename the file name.
                             rename(
-                                "{$upload_path}/{$size_file_path}", 
-                                $new_size_file_path
+                                "{$upload_path}/{$src_file_path}", 
+                                $new_src_file_path
                             );
     
-                            // update media detail.
-                            $mediaDetails['sizes'][$s]['source_url'] = str_replace($old_date, $correct_date, $source_url);
+                            // update media detail source url and file.
+                            $mediaDetails['sizes'][$s]['source_url'] = str_replace(
+                                array($old_fn, $old_date),
+                                array($new_fn, $correct_date),
+                                $mediaDetails['sizes'][$s]['source_url']
+                            );
+                            $mediaDetails['sizes'][$s]['file'] = str_replace(
+                                $old_fn,
+                                $new_fn,
+                                pathinfo( $src_file_path, PATHINFO_BASENAME )
+                            );
     
                         }
                     }
